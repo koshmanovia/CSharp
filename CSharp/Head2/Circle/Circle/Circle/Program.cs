@@ -28,7 +28,7 @@ namespace Circle
 
             //вывод данных на экран   
             Console.Clear();
-            s = r * r * 3.14;
+            s = r * r * 3.1416;
             Console.WriteLine("Прощадь круга равна: " + s);
             Console.ReadKey();
 
