@@ -14,7 +14,8 @@ namespace SinCosTan
             {
                 Console.WriteLine("sin " + theta + " = " + Math.Sin(theta));
                 Console.WriteLine("cos " + theta + " = " + Math.Cos(theta));
-                Console.WriteLine("tg  " + theta + " = " + Math.Tan(theta));
+                Console.WriteLine("tg  " + theta + " =" +
+                    " " + Math.Tan(theta));
                 Console.WriteLine();
             }
             Console.ReadKey();
