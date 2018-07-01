@@ -51,7 +51,8 @@ namespace NotCompatibleTypes
             Console.WriteLine("s" + o + "-12: " + u + s1 + "\n");
 
             //Приведение типа int к типу char
-             ch = (char) b;
+            b = 88;
+            ch = (char) b;
             Console.WriteLine("ch после присваивания 88: {0}", ch);
 
             Console.ReadKey();
