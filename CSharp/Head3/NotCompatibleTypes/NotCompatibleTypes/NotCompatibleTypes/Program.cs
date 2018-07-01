@@ -12,7 +12,7 @@ namespace NotCompatibleTypes
         {
             String o = " после присваивания ", s1 = " -- с потерей данных ", s2 = " -- без потери данных ";
             double x = 10.0, y = 3.0;
-            byte b = 88;
+            byte b;
             int i;
             char ch;
             uint u =32000;
