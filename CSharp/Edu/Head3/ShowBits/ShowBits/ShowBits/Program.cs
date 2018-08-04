@@ -10,7 +10,9 @@ namespace ShowBits
     {
         static void Main(string[] args)
         {
-            byte val = 255;
+            byte val = 255
+                 
+                 ;
             int t = 128;
 
             for (; t > 0; t = t/2 )
