@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinger", "Pinger\Pinger.csproj", "{2A7E7676-2267-41A1-8DC9-E225C5D3FE74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pinger", "Pinger\Pinger.csproj", "{F5BC87FF-B89F-4000-AAF3-75DF448263B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2A7E7676-2267-41A1-8DC9-E225C5D3FE74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2A7E7676-2267-41A1-8DC9-E225C5D3FE74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2A7E7676-2267-41A1-8DC9-E225C5D3FE74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2A7E7676-2267-41A1-8DC9-E225C5D3FE74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5BC87FF-B89F-4000-AAF3-75DF448263B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5BC87FF-B89F-4000-AAF3-75DF448263B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5BC87FF-B89F-4000-AAF3-75DF448263B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5BC87FF-B89F-4000-AAF3-75DF448263B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FBBE0C7F-1915-43AF-938E-D04AF94EB9C2}
+		SolutionGuid = {2B635F57-959A-48F4-A8BA-E1ED2AB070DE}
 	EndGlobalSection
 EndGlobal

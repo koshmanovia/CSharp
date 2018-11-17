@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F5BC87FF-B89F-4000-AAF3-75DF448263B6}</ProjectGuid>
+    <ProjectGuid>{137139E9-A964-4473-977E-AD2E77B39103}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Pinger</RootNamespace>
-    <AssemblyName>Pinger</AssemblyName>
+    <RootNamespace>while</RootNamespace>
+    <AssemblyName>@while</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
