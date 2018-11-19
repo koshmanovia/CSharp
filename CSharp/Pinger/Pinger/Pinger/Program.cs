@@ -37,9 +37,8 @@ namespace Pinger
                 {
                 //сделать потоки, один для вывода на экран сообщений, второй для выхода из цикла(нажатием кнопки, вводом сообщения...??????)
                 PingReply ReplyInputDataHost = Pinger.Send(addressHost, timeoutHost);
-                Console.WriteLine("DNS Address: {0}", addressHost);
-                Console.WriteLine("IP Address: {0}", ReplyInputDataHost.Address.ToString());
-                Console.WriteLine("RoundTrip time: {0}", ReplyInputDataHost.RoundtripTime);   //выделение цветом таймаута + обработка исключений если сервер недоступен
+                Console.WriteLine("|DNS Address| IP Address   |RoundTrip time|\n {0}"+"       {1}"+"    {2}", addressHost, ReplyInputDataHost.Address.ToString(), ReplyInputDataHost.RoundtripTime);
+                 //выделение цветом таймаута + обработка исключений если сервер недоступен + шрамотное построение таблицы
                 Thread.Sleep(1200);
                 Console.Clear(); //посмотреть как сделать плавное удаление данных из консоли, чтобы не моргало
                 }
