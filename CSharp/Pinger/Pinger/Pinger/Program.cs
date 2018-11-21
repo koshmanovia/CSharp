@@ -10,45 +10,60 @@ using System.Threading.Tasks;
 
 namespace Pinger
 {
-
     class Pinger
     {
         static void Main(string[] args)
         {
             List<String> inputHostName = new List<String>();
-            inputHostName.Add("ya.ru");
+            inputHostName.Add("yandex.ru");
             inputHostName.Add("google.com");
-            inputHostName.Add("nalog.ru");
-            
+            inputHostName.Add("rambler.ru");            
             int  inputHostTimeoute = 10000;
             PingerOutput startingAnalyze = new PingerOutput();
-            for(int i = 0; i < inputHostName.Count; i++)//убрать отсюда этот массив и запихать в метод, прости GitHub что такой позор в тебя заливаю
-            {
-                String tempHostName = inputHostName[i];
-                startingAnalyze.CreateTableHost(tempHostName, inputHostTimeoute);
-            }
-                       
+            startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);                       
         }
-    }    
+    }
+    
     class PingerOutput
     {
-        public void CreateTableHost(String addressHost, int timeoutHost)//сюда передавать надо массив и перебирать непосредственно тут
-        {
+        public void CreateTableHost(List<String> addressHost, int timeoutHost)
+        {        
             Ping Pinger = new Ping();
-            for ( ; ; )
-            {   
-                
-                PingReply ReplyInputDataHost = Pinger.Send(addressHost, timeoutHost);                               
-                Console.WriteLine("|    DNS  Address    |   IP Address   | RoundTrip time|"+ //таблицу переписать, шапка печатается каждый раз, ничего удивительного
-                    "\n {0}" + "       {1}"+"    {2}", addressHost, ReplyInputDataHost.Address.ToString(), ReplyInputDataHost.RoundtripTime);              
-                Thread.Sleep(1200);
-                Console.Clear(); 
+            LineTableWrite line = new LineTableWrite();
+            List<long> BaseRoadTripTime = new List<long>();
+            for (; ; )
+            {
+                Console.WriteLine("     DNS  Address        IP Address     RoundTrip time ");   
+                for (int i = 0; i < addressHost.Count; i++)
+                {
+                    String tempHostName = addressHost[i];
+                    PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);
+                    line.run();
+                    Console.WriteLine();
+                    Console.WriteLine("     {0}       "+"  {1}     "+ "     {2}     ", tempHostName, ReplyInputDataHost.Address.ToString(), ReplyInputDataHost.RoundtripTime);
+                }
+                line.run();
+                Thread.Sleep(3200);
+                Console.Clear();
+            }
+        }        
+        
+    }
+    class LineTableWrite
+    {
+        public void run()
+        {
+            for (int j = 0; j < 55; j++)
+            {
+                Console.Write("_");
             }
         }
-        //написать метод вычленяющий длинну хоста и если она больше 20 символов то урезать с конца лишнее и забивать таблицу
     }
-
 }
+//чтобы выводило без задержек, стоит попробовать пихать все в массив\класс, и выводить уже готовые значения из массива\класса 
+//без работы в реальном времени || реализация тоже идет по потокам??????
+
+//написать метод вычленяющий длинну хоста и если она больше 20 символов то урезать с конца лишнее и забивать таблицу
 //переработай имена в более корректные и убодные не будь ленивой задницей, думай как их сделать более удобными постоянно!!!
 //добавь ведение лога с привязкой времени 
 //сделать потоки, один для вывода на экран сообщений, второй для выхода из цикла(нажатием кнопки, вводом сообщения...??????)
