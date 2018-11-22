@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace Pinger
 {
     class Pinger
@@ -29,7 +30,7 @@ namespace Pinger
         public void CreateTableHost(List<String> addressHost, int timeoutHost)
         {        
             Ping Pinger = new Ping();
-            LineTableWrite line = new LineTableWrite();
+            outputDataPinger line = new outputDataPinger();
             List<long> BaseRoadTripTime = new List<long>();
             for (; ; )
             {
@@ -38,35 +39,39 @@ namespace Pinger
                 {
                     String tempHostName = addressHost[i];
                     PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);
-                    line.run();
+                    line.WriteLine();
                     Console.WriteLine();
                     Console.WriteLine("     {0}       "+"  {1}     "+ "     {2}     ", tempHostName, ReplyInputDataHost.Address.ToString(), ReplyInputDataHost.RoundtripTime);
                 }
-                line.run();
+                line.WriteLine();
                 Thread.Sleep(3200);
                 Console.Clear();
             }
         }        
         
     }
-    class LineTableWrite
+    class outputDataPinger
     {
-        public void run()
+        public void WriteLine()
         {
             for (int j = 0; j < 55; j++)
             {
                 Console.Write("_");
             }
         }
+        public void writeTextColor()
+        {
+            //написать метод вычленяющий длинну хоста и если она больше 20 символов то урезать с конца лишнее и забивать таблицу
+            //выделение цветом таймаута + обработка исключений если сервер недоступен + грамотное построение таблицы обязательно динамическое
+        }
+
     }
 }
 //чтобы выводило без задержек, стоит попробовать пихать все в массив\класс, и выводить уже готовые значения из массива\класса 
 //без работы в реальном времени || реализация тоже идет по потокам??????
 
-//написать метод вычленяющий длинну хоста и если она больше 20 символов то урезать с конца лишнее и забивать таблицу
 //переработай имена в более корректные и убодные не будь ленивой задницей, думай как их сделать более удобными постоянно!!!
 //добавь ведение лога с привязкой времени 
 //сделать потоки, один для вывода на экран сообщений, второй для выхода из цикла(нажатием кнопки, вводом сообщения...??????)
 //создание отдельного класса inputHostName, тянуть из файла, плюс отдельная прога для редакирования данных.
-//выделение цветом таймаута + обработка исключений если сервер недоступен + грамотное построение таблицы обязательно динамическое
 //последним добавить отправку сообщений на эл.почту (продумать как правильно сделать, чтобы не спамить)
