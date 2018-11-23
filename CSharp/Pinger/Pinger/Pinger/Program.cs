@@ -39,11 +39,14 @@ namespace Pinger
                 {
                     String tempHostName = addressHost[i];
                     PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);
-                    line.WriteLine();
+                    line.WriteLine(55);                    
+                    String ipAddress = ReplyInputDataHost.Address.ToString();
+
+                    long  = ReplyInputDataHost.RoundtripTime;
                     Console.WriteLine();
                     Console.WriteLine("     {0}       "+"  {1}     "+ "     {2}     ", tempHostName, ReplyInputDataHost.Address.ToString(), ReplyInputDataHost.RoundtripTime);
                 }
-                line.WriteLine();
+                line.WriteLine(55);
                 Thread.Sleep(3200);
                 Console.Clear();
             }
@@ -52,14 +55,14 @@ namespace Pinger
     }
     class outputDataPinger
     {
-        public void WriteLine()
+        public void WriteLine(int inpLongNum)
         {
-            for (int j = 0; j < 55; j++)
+            for (int j = 0; j < inpLongNum; j++)
             {
                 Console.Write("_");
             }
         }
-        public void writeTextColor()
+        public void writeTextColor(String tempHostName, ReplyInputDataHost.Address.ToString(), ReplyInputDataHost.RoundtripTime)
         {
             //написать метод вычленяющий длинну хоста и если она больше 20 символов то урезать с конца лишнее и забивать таблицу
             //выделение цветом таймаута + обработка исключений если сервер недоступен + грамотное построение таблицы обязательно динамическое
