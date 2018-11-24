@@ -16,10 +16,18 @@ namespace Pinger
         static void Main(string[] args)
         {
             List<String> inputHostName = new List<String>();
+            inputHostName.Add("sampo.ru");
             inputHostName.Add("yandex.ru");
             inputHostName.Add("google.com");
             inputHostName.Add("rambler.ru");            
-            int  inputHostTimeoute = 10000;
+            inputHostName.Add("facebook.com");
+            inputHostName.Add("kia.com");
+            inputHostName.Add("vk.ru");
+            inputHostName.Add("github.com");
+            inputHostName.Add("wikipedia.com");
+            inputHostName.Add("101.ru");
+            inputHostName.Add("harvard.edu");          
+            int inputHostTimeoute = 10000;
             PingerOutput startingAnalyze = new PingerOutput();
             startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);                       
         }
@@ -30,8 +38,7 @@ namespace Pinger
         public void CreateTableHost(List<String> addressHost, int timeoutHost)
         {        
             Ping Pinger = new Ping();
-            outputDataPinger line = new outputDataPinger();
-            List<long> BaseRoadTripTime = new List<long>();
+            outputDataPinger line = new outputDataPinger();           
             for (; ; )
             {
                 Console.WriteLine("     DNS  Address        IP Address     RoundTrip time ");   
@@ -41,10 +48,9 @@ namespace Pinger
                     PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);
                     line.WriteLine(55);                    
                     String ipAddress = ReplyInputDataHost.Address.ToString();
-
-                    long  = ReplyInputDataHost.RoundtripTime;
+                    long roadTrip = ReplyInputDataHost.RoundtripTime;
                     Console.WriteLine();
-                    Console.WriteLine("     {0}       "+"  {1}     "+ "     {2}     ", tempHostName, ReplyInputDataHost.Address.ToString(), ReplyInputDataHost.RoundtripTime);
+                    line.writeTextColor(tempHostName, ipAddress, roadTrip);                   
                 }
                 line.WriteLine(55);
                 Thread.Sleep(3200);
@@ -62,8 +68,29 @@ namespace Pinger
                 Console.Write("_");
             }
         }
-        public void writeTextColor(String tempHostName, ReplyInputDataHost.Address.ToString(), ReplyInputDataHost.RoundtripTime)
+        public void writeTextColor(String tempHostName, String ipAddress, long roadTrip)
         {
+           //переделать под кейсы(switch - case), иначе нестабильно работает!
+            if (roadTrip < 11)
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+            else if (roadTrip < 26)
+                Console.ForegroundColor = ConsoleColor.Green;
+            else if (roadTrip < 46)
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            else if (roadTrip < 76)
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+            else if (roadTrip < 106)
+                Console.ForegroundColor = ConsoleColor.Red;
+            else if (roadTrip < 232)
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                Console.WriteLine("     {0}       " + "  {1}     " + " Сервер недоступен! ", tempHostName, ipAddress);
+                return;
+            }
+            Console.WriteLine("     {0}       " + "  {1}     " + "     {2}     ", tempHostName, ipAddress, roadTrip);
+            Console.ResetColor();
             //написать метод вычленяющий длинну хоста и если она больше 20 символов то урезать с конца лишнее и забивать таблицу
             //выделение цветом таймаута + обработка исключений если сервер недоступен + грамотное построение таблицы обязательно динамическое
         }
