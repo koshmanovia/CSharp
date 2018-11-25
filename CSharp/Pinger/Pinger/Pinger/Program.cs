@@ -26,7 +26,8 @@ namespace Pinger
             inputHostName.Add("github.com");
             inputHostName.Add("wikipedia.com");
             inputHostName.Add("101.ru");
-            inputHostName.Add("harvard.edu");          
+            inputHostName.Add("harvard.edu");
+            inputHostName.Add("nalog.ru");
             int inputHostTimeoute = 10000;
             PingerOutput startingAnalyze = new PingerOutput();
             startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);                       
@@ -70,27 +71,31 @@ namespace Pinger
         }
         public void writeTextColor(String tempHostName, String ipAddress, long roadTrip)
         {
-           //переделать под кейсы(switch - case), иначе нестабильно работает!
-            if (roadTrip < 11)
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-            else if (roadTrip < 26)
-                Console.ForegroundColor = ConsoleColor.Green;
-            else if (roadTrip < 46)
-                Console.ForegroundColor = ConsoleColor.Yellow;
-            else if (roadTrip < 76)
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-            else if (roadTrip < 106)
-                Console.ForegroundColor = ConsoleColor.Red;
-            else if (roadTrip < 232)
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-            else
+            //Кейсы мимо, обработчик исключений нужен не здесь, думай!
+            try
+            { 
+                if (roadTrip < 11)
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                else if (roadTrip < 26)
+                    Console.ForegroundColor = ConsoleColor.Green;
+                else if (roadTrip < 46)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                else if (roadTrip < 76)
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                else if (roadTrip < 106)
+                    Console.ForegroundColor = ConsoleColor.Red;
+                else if (roadTrip < 232)
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("     {0}       " + "  {1}     " + "     {2}     ", tempHostName, ipAddress, roadTrip);
+                Console.ResetColor();
+            }
+            catch
             {
                 Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 Console.WriteLine("     {0}       " + "  {1}     " + " Сервер недоступен! ", tempHostName, ipAddress);
-                return;
+                Console.ResetColor();
             }
-            Console.WriteLine("     {0}       " + "  {1}     " + "     {2}     ", tempHostName, ipAddress, roadTrip);
-            Console.ResetColor();
+            
             //написать метод вычленяющий длинну хоста и если она больше 20 символов то урезать с конца лишнее и забивать таблицу
             //выделение цветом таймаута + обработка исключений если сервер недоступен + грамотное построение таблицы обязательно динамическое
         }
