@@ -28,6 +28,7 @@ namespace Pinger
             inputHostName.Add("101.ru");
             inputHostName.Add("harvard.edu");
             inputHostName.Add("nalog.ru");
+           // inputHostName.Add(" ");
             int inputHostTimeoute = 10000;
             PingerOutput startingAnalyze = new PingerOutput();
             startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);                       
@@ -39,6 +40,8 @@ namespace Pinger
         public void CreateTableHost(List<String> addressHost, int timeoutHost)
         {        
             Ping Pinger = new Ping();
+            String ipAddress;
+            long roadTrip;
             outputDataPinger line = new outputDataPinger();           
             for (; ; )
             {
@@ -47,9 +50,25 @@ namespace Pinger
                 {
                     String tempHostName = addressHost[i];
                     PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);
-                    line.WriteLine(55);                    
-                    String ipAddress = ReplyInputDataHost.Address.ToString();
-                    long roadTrip = ReplyInputDataHost.RoundtripTime;
+                    line.WriteLine(55);
+
+                    try
+                    {
+                        ipAddress = ReplyInputDataHost.Address.ToString();
+                        roadTrip = ReplyInputDataHost.RoundtripTime;
+                    }
+                    catch (NullReferenceException)
+                    {
+                        ipAddress = "Сервер Недоступен";
+                        roadTrip = 0;
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        tempHostName = "Адрес введен неверно!";
+                        ipAddress = "Сервер Недоступен";
+                        roadTrip = 0;
+                    }
+                    
                     Console.WriteLine();
                     line.writeTextColor(tempHostName, ipAddress, roadTrip);                   
                 }
@@ -62,6 +81,7 @@ namespace Pinger
     }
     class outputDataPinger
     {
+        
         public void WriteLine(int inpLongNum)
         {
             for (int j = 0; j < inpLongNum; j++)
@@ -71,10 +91,10 @@ namespace Pinger
         }
         public void writeTextColor(String tempHostName, String ipAddress, long roadTrip)
         {
-            //Кейсы мимо, обработчик исключений нужен не здесь, думай!
-            try
-            { 
-                if (roadTrip < 11)
+            
+                if (ipAddress == "Сервер Недоступен")
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                else if (roadTrip < 11)
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                 else if (roadTrip < 26)
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -85,22 +105,18 @@ namespace Pinger
                 else if (roadTrip < 106)
                     Console.ForegroundColor = ConsoleColor.Red;
                 else if (roadTrip < 232)
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("     {0}       " + "  {1}     " + "     {2}     ", tempHostName, ipAddress, roadTrip);
+                    Console.ForegroundColor = ConsoleColor.DarkRed;                    
+                else Console.ForegroundColor = ConsoleColor.DarkMagenta;
+
+                Console.WriteLine("     {0}       " + "  {1}     " + "     {2}     ", tempHostName, ipAddress, roadTrip);            
                 Console.ResetColor();
-            }
-            catch
-            {
-                Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                Console.WriteLine("     {0}       " + "  {1}     " + " Сервер недоступен! ", tempHostName, ipAddress);
-                Console.ResetColor();
-            }
+        }
             
             //написать метод вычленяющий длинну хоста и если она больше 20 символов то урезать с конца лишнее и забивать таблицу
             //выделение цветом таймаута + обработка исключений если сервер недоступен + грамотное построение таблицы обязательно динамическое
-        }
-
     }
+
+    
 }
 //чтобы выводило без задержек, стоит попробовать пихать все в массив\класс, и выводить уже готовые значения из массива\класса 
 //без работы в реальном времени || реализация тоже идет по потокам??????
