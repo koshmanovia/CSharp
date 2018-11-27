@@ -101,11 +101,11 @@ namespace Pinger
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                 else if (roadTrip < 41)
                     Console.ForegroundColor = ConsoleColor.Green;
-                else if (roadTrip < 61)
+                else if (roadTrip < 71)
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                else if (roadTrip < 91)
+                else if (roadTrip < 111)
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                else if (roadTrip < 131)
+                else if (roadTrip < 151)
                     Console.ForegroundColor = ConsoleColor.Red;
                 else if (roadTrip < 251)
                     Console.ForegroundColor = ConsoleColor.DarkRed;                    
