@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace Pinger
 {
     class Pinger
@@ -26,9 +25,10 @@ namespace Pinger
             inputHostName.Add("github.com");
             inputHostName.Add("wikipedia.com");
             inputHostName.Add("101.ru");
-            inputHostName.Add("harvard.edu");
+            inputHostName.Add("harvard.edu");            
+            inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
             inputHostName.Add("nalog.ru");
-           // inputHostName.Add(" ");
+            // inputHostName.Add(" ");
             int inputHostTimeoute = 10000;
             PingerOutput startingAnalyze = new PingerOutput();
             startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);                       
@@ -42,15 +42,17 @@ namespace Pinger
             Ping Pinger = new Ping();
             String ipAddress;
             long roadTrip;
-            outputDataPinger line = new outputDataPinger();           
+            outputDataPinger line = new outputDataPinger();            
+            String spaceNum1 = "            ";//12
+            String spaceNum2 = "           ";//11
+           
             for (; ; )
             {
-                Console.WriteLine("     DNS  Address        IP Address     RoundTrip time ");   
+                Console.WriteLine("DNS Address" + spaceNum1 + "IP Address" + spaceNum2 + "Ping");
                 for (int i = 0; i < addressHost.Count; i++)
                 {
                     String tempHostName = addressHost[i];
-                    PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);
-                    line.WriteLine(55);
+                    PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);                  
 
                     try
                     {
@@ -67,57 +69,77 @@ namespace Pinger
                         tempHostName = "Адрес введен неверно!";
                         ipAddress = "Сервер Недоступен";
                         roadTrip = 0;
-                    }
-                    
-                    Console.WriteLine();
-                    line.writeTextColor(tempHostName, ipAddress, roadTrip);                   
+                    }                    
+                Console.WriteLine();
+                line.writeTextColor(tempHostName, ipAddress, roadTrip);                   
                 }
-                line.WriteLine(55);
-                Thread.Sleep(3200);
-                Console.Clear();
+            Thread.Sleep(3200);
+            Console.Clear();
             }
-        }        
-        
+        }               
     }
     class outputDataPinger
     {
         
-        public void WriteLine(int inpLongNum)
+        public void writeCharLine(int inpLongNum, char inpChar)
         {
             for (int j = 0; j < inpLongNum; j++)
             {
-                Console.Write("_");
+                Console.Write(inpChar);
             }
         }
-        public void writeTextColor(String tempHostName, String ipAddress, long roadTrip)
+        public void writeTextColor(String hostName, String ipAddress, long roadTrip)
         {
-            
+            int LengthHostName = hostName.Length;
+            int LengthipAddress = ipAddress.Length;
+            String strRoadTrip = roadTrip.ToString();
+            int LengthroadTrip = strRoadTrip.Length;
+
                 if (ipAddress == "Сервер Недоступен")
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
-                else if (roadTrip < 11)
+                Console.ForegroundColor = ConsoleColor.Blue;
+                else if (roadTrip < 21)
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
-                else if (roadTrip < 26)
+                else if (roadTrip < 41)
                     Console.ForegroundColor = ConsoleColor.Green;
-                else if (roadTrip < 46)
+                else if (roadTrip < 61)
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                else if (roadTrip < 76)
+                else if (roadTrip < 91)
                     Console.ForegroundColor = ConsoleColor.DarkYellow;
-                else if (roadTrip < 106)
+                else if (roadTrip < 131)
                     Console.ForegroundColor = ConsoleColor.Red;
-                else if (roadTrip < 232)
+                else if (roadTrip < 251)
                     Console.ForegroundColor = ConsoleColor.DarkRed;                    
-                else Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                else Console.ForegroundColor = ConsoleColor.Magenta;
 
-                Console.WriteLine("     {0}       " + "  {1}     " + "     {2}     ", tempHostName, ipAddress, roadTrip);            
-                Console.ResetColor();
-        }
-            
-            //написать метод вычленяющий длинну хоста и если она больше 20 символов то урезать с конца лишнее и забивать таблицу
-            //выделение цветом таймаута + обработка исключений если сервер недоступен + грамотное построение таблицы обязательно динамическое
-    }
-
-    
+            if (LengthHostName > 20)
+            {
+                int tempNumipAddress = 21 - LengthipAddress;
+                int tempNumroadTrip = 6 - LengthroadTrip;
+                Console.Write(hostName.Substring(0, 19) + "....");
+                Console.Write(ipAddress);
+                writeCharLine(tempNumipAddress, '.');
+                Console.Write(roadTrip);
+                writeCharLine(tempNumroadTrip, '.');
+                Console.WriteLine();
+            }
+            else
+            {
+                int tempNumHostName = 23 - LengthHostName;
+                int tempNumipAddress = 21 - LengthipAddress;
+                int tempNumroadTrip = 6 - LengthroadTrip;
+                Console.Write(hostName);
+                writeCharLine(tempNumHostName, '.');
+                Console.Write(ipAddress);
+                writeCharLine(tempNumipAddress, '.');
+                Console.Write(roadTrip);
+                writeCharLine(tempNumroadTrip, '.');
+                Console.WriteLine();
+            }
+        Console.ResetColor();          
+        }                   
+    }    
 }
+//добавить обработку исключений при отсутвии связи + обработку исключения если пустое значение
 //чтобы выводило без задержек, стоит попробовать пихать все в массив\класс, и выводить уже готовые значения из массива\класса 
 //без работы в реальном времени || реализация тоже идет по потокам??????
 
