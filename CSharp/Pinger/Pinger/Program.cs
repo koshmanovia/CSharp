@@ -49,12 +49,13 @@ namespace Pinger
             String spaceNum1 = "            ";//12
             String spaceNum2 = "           ";//11
             String spaceNum3 = "  ";//2
+            String spaceNum4 = "                                    ";//36
 
             for (; ; )
             {
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.White;
-                Console.WriteLine(spaceNum3 + "DNS Address" + spaceNum1 + "IP Address" + spaceNum2 + "Ping" + spaceNum3);
+                Console.WriteLine(spaceNum3 + "DNS Address" + spaceNum1 + "IP Address" + spaceNum2 + "Ping" + spaceNum3 + " Quality" + spaceNum3 + " Breaks " + spaceNum3 + "Location" + spaceNum4);
                 for (int i = 0; i < addressHost.Count; i++)
                 {
                     String tempHostName = addressHost[i];
@@ -64,20 +65,23 @@ namespace Pinger
                     {
                         ipAddress = ReplyInputDataHost.Address.ToString();
                         roadTrip = ReplyInputDataHost.RoundtripTime;
+                        Console.WriteLine();
+                        line.writeTextColor(tempHostName, ipAddress, roadTrip);
                     }
                     catch (NullReferenceException)
                     {
                         ipAddress = "Сервер Недоступен";
                         roadTrip = 0;
+                        Console.WriteLine();
+                        line.writeTextColor(tempHostName, ipAddress, roadTrip);
                     }
-                    catch (ArgumentNullException) //допилить исключение
+                    catch (ArgumentNullException) //допилить исключение<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                     {
                         tempHostName = "Адрес введен неверно!";
                         ipAddress = "Сервер Недоступен";
                         roadTrip = 0;
                     }
-                    Console.WriteLine();
-                    line.writeTextColor(tempHostName, ipAddress, roadTrip);
+                    
                 }
                 Thread.Sleep(3200);
                 Console.ForegroundColor = ConsoleColor.Black;
@@ -152,7 +156,7 @@ namespace Pinger
         }
     }
 }
-//При выводе чтобы шла автоматическая регулировка окна.
+//При выводе чтобы шла автоматическая регулировка вывода окна.
 
 //качество связи в % отдельный столбец для каждого столбца. Продумать сброс данных, чтобы не перегружать переменную
 
