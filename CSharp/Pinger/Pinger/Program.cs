@@ -17,6 +17,7 @@ namespace Pinger
         {
             List<String> inputHostName = new List<String>();            
             inputHostName.Add("192.168.1.1");
+            inputHostName.Add("10.10.10.10");
             inputHostName.Add("sampo.ru");
             inputHostName.Add(" gdfshsd.ghgfd ");
             inputHostName.Add("yandex.ru");
@@ -24,6 +25,7 @@ namespace Pinger
             inputHostName.Add(" erty ");                     
             inputHostName.Add("rambler.ru");
             inputHostName.Add("facebook.com");
+            inputHostName.Add("100.77.160.1");
             inputHostName.Add("kia.com");
             inputHostName.Add("vk.ru");
             inputHostName.Add(" 356.457.541.999");
@@ -123,22 +125,22 @@ namespace Pinger
             }
             else if (roadTrip == 0)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 roadTrip = 1;
             }
             else if (roadTrip < 21)
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-            else if (roadTrip < 41)
-                Console.ForegroundColor = ConsoleColor.Green;
-            else if (roadTrip < 71)
-                Console.ForegroundColor = ConsoleColor.Yellow;
-            else if (roadTrip < 111)
-                Console.ForegroundColor = ConsoleColor.DarkYellow;
-            else if (roadTrip < 151)
                 Console.ForegroundColor = ConsoleColor.Cyan;
+            else if (roadTrip < 41)
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+            else if (roadTrip < 71)
+                Console.ForegroundColor = ConsoleColor.Green;
+            else if (roadTrip < 111)
+                Console.ForegroundColor = ConsoleColor.Yellow;
+            else if (roadTrip < 151)
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
             else if (roadTrip < 251)
-                Console.ForegroundColor = ConsoleColor.DarkCyan;
-            else Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Red;
+            else Console.ForegroundColor = ConsoleColor.DarkRed;
 
             if (LengthHostName > 20)
             {
