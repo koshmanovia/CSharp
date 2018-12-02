@@ -15,15 +15,18 @@ namespace Pinger
     {
         static void Main(string[] args)
         {
-            List<String> inputHostName = new List<String>();
+            List<String> inputHostName = new List<String>();            
             inputHostName.Add("192.168.1.1");
             inputHostName.Add("sampo.ru");
+            inputHostName.Add(" gdfshsd.ghgfd ");
             inputHostName.Add("yandex.ru");
             inputHostName.Add("google.com");
+            inputHostName.Add(" erty ");                     
             inputHostName.Add("rambler.ru");
             inputHostName.Add("facebook.com");
             inputHostName.Add("kia.com");
             inputHostName.Add("vk.ru");
+            inputHostName.Add(" 356.457.541.999");
             inputHostName.Add("vk.com");
             inputHostName.Add("github.com");
             inputHostName.Add("wikipedia.com");
@@ -31,7 +34,6 @@ namespace Pinger
             inputHostName.Add("harvard.edu");
             inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
             inputHostName.Add("nalog.ru");
-            // inputHostName.Add(" "); <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< не забудь!!!!!!!!!!!!!!!!!!!!!!!
             int inputHostTimeoute = 10000;
             PingerOutput startingAnalyze = new PingerOutput();
             startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);
@@ -59,29 +61,32 @@ namespace Pinger
                 for (int i = 0; i < addressHost.Count; i++)
                 {
                     String tempHostName = addressHost[i];
-                    PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);
-
                     try
                     {
-                        ipAddress = ReplyInputDataHost.Address.ToString();
-                        roadTrip = ReplyInputDataHost.RoundtripTime;
-                        Console.WriteLine();
-                        line.writeTextColor(tempHostName, ipAddress, roadTrip);
+                        PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);
+                        try
+                        {
+                            ipAddress = ReplyInputDataHost.Address.ToString();
+                            roadTrip = ReplyInputDataHost.RoundtripTime;
+                            Console.WriteLine();
+                            line.writeTextColor(tempHostName, ipAddress, roadTrip);
+                        }
+                        catch (NullReferenceException)
+                        {
+                            ipAddress = "not available";
+                            roadTrip = 0;
+                            Console.WriteLine();
+                            line.writeTextColor(tempHostName, ipAddress, roadTrip);
+                        }
                     }
-                    catch (NullReferenceException)
-                    {
-                        ipAddress = "Сервер Недоступен";
+                    catch (PingException)
+                    {                     
+                        ipAddress = "HOST NAME ERROR!";
                         roadTrip = 0;
                         Console.WriteLine();
-                        line.writeTextColor(tempHostName, ipAddress, roadTrip);
+                        line.writeTextColor( tempHostName, ipAddress, roadTrip);
+
                     }
-                    catch (ArgumentNullException) //допилить исключение<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                    {
-                        tempHostName = "Адрес введен неверно!";
-                        ipAddress = "Сервер Недоступен";
-                        roadTrip = 0;
-                    }
-                    
                 }
                 Thread.Sleep(3200);
                 Console.ForegroundColor = ConsoleColor.Black;
@@ -106,16 +111,23 @@ namespace Pinger
             String strRoadTrip = roadTrip.ToString();
             int LengthroadTrip = strRoadTrip.Length;
             Console.BackgroundColor = ConsoleColor.Black;
-            if (ipAddress == "Сервер Недоступен")
+            if (ipAddress == "not available")
             {
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.DarkRed;
             }
-            else if (roadTrip < 21)
+            else if (ipAddress == "HOST NAME ERROR!")
             {
-
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.BackgroundColor = ConsoleColor.Red;
             }
+            else if (roadTrip == 0)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                roadTrip = 1;
+            }
+            else if (roadTrip < 21)
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
             else if (roadTrip < 41)
                 Console.ForegroundColor = ConsoleColor.Green;
             else if (roadTrip < 71)
@@ -123,10 +135,10 @@ namespace Pinger
             else if (roadTrip < 111)
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
             else if (roadTrip < 151)
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Cyan;
             else if (roadTrip < 251)
-                Console.ForegroundColor = ConsoleColor.DarkRed;
-            else Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+            else Console.ForegroundColor = ConsoleColor.Red;
 
             if (LengthHostName > 20)
             {
