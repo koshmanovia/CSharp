@@ -17,7 +17,7 @@ namespace Pinger
         {
             List<String> inputHostName = new List<String>();            
             inputHostName.Add("192.168.1.1");
-            inputHostName.Add("10.10.10.10");
+
             inputHostName.Add("sampo.ru");
             inputHostName.Add(" gdfshsd.ghgfd ");
             inputHostName.Add("yandex.ru");
@@ -35,8 +35,19 @@ namespace Pinger
             inputHostName.Add("101.ru");
             inputHostName.Add("harvard.edu");
             inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
+            inputHostName.Add("10.10.10.10");
             inputHostName.Add("nalog.ru");
-            int inputHostTimeoute = 10000;
+
+            int inputHostTimeoute = 1000; 
+            int windowHeightNum = inputHostName.Count() * 2 + 2;
+            if (windowHeightNum < 64)
+                Console.WindowHeight = windowHeightNum;
+            else
+            { 
+                windowHeightNum = 63;
+                Console.WindowHeight = windowHeightNum;
+            }
+            Console.WindowWidth = 120;
             PingerOutput startingAnalyze = new PingerOutput();
             startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);
         }
@@ -123,7 +134,7 @@ namespace Pinger
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.Red;
             }
-            else if (roadTrip == 0)
+            else if (roadTrip == 0 || roadTrip < 3)
             {
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 roadTrip = 1;
@@ -170,7 +181,6 @@ namespace Pinger
         }
     }
 }
-//При выводе чтобы шла автоматическая регулировка вывода окна.
 
 //качество связи в % отдельный столбец для каждого столбца. Продумать сброс данных, чтобы не перегружать переменную
 
