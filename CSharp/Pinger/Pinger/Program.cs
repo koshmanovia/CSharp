@@ -134,11 +134,13 @@ namespace Pinger
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.Red;
             }
-            else if (roadTrip == 0 || roadTrip < 3)
+            else if (roadTrip == 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 roadTrip = 1;
             }
+            else if (roadTrip < 3)            
+                Console.ForegroundColor = ConsoleColor.DarkCyan;                
             else if (roadTrip < 21)
                 Console.ForegroundColor = ConsoleColor.Cyan;
             else if (roadTrip < 41)
