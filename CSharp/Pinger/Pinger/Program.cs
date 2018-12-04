@@ -14,21 +14,21 @@ namespace Pinger
     class Pinger
     {
         static void Main(string[] args)
-        {
+        {                   
             List<String> inputHostName = new List<String>();            
             inputHostName.Add("192.168.1.1");
-
             inputHostName.Add("sampo.ru");
-            inputHostName.Add(" gdfshsd.ghgfd ");
+            inputHostName.Add("gdfshsd.ghgfd ");
             inputHostName.Add("yandex.ru");
             inputHostName.Add("google.com");
-            inputHostName.Add(" erty ");                     
+            inputHostName.Add(" erty ");
+            inputHostName.Add(" ");
             inputHostName.Add("rambler.ru");
             inputHostName.Add("facebook.com");
             inputHostName.Add("100.77.160.1");
             inputHostName.Add("kia.com");
             inputHostName.Add("vk.ru");
-            inputHostName.Add(" 356.457.541.999");
+            inputHostName.Add("356.457.541.999");
             inputHostName.Add("vk.com");
             inputHostName.Add("github.com");
             inputHostName.Add("wikipedia.com");
@@ -38,7 +38,7 @@ namespace Pinger
             inputHostName.Add("10.10.10.10");
             inputHostName.Add("nalog.ru");
 
-            int inputHostTimeoute = 1000; 
+            int inputHostTimeoute = 1000; //маленький таймаут для тестов! в финале исправь как надо!
             int windowHeightNum = inputHostName.Count() * 2 + 2;
             if (windowHeightNum < 64)
                 Console.WindowHeight = windowHeightNum;
@@ -182,13 +182,41 @@ namespace Pinger
             Console.ResetColor();
         }
     }
+
+    class Host //переименуй потом, плохое имя <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    {
+        string hostName { get; set; }
+        private byte pingIterator { get; set; }
+        private bool hostStatus { get; set; }
+        private byte qualityLinkHost { get; set; }
+        private short breaksNumHost { get; set; }
+        string physLocationHost { get; set; }
+
+        private short BreaksNumHost
+        {
+            get => breaksNumHost;
+            set
+            {
+                if (breaksNumHost < 1000)                
+                    breaksNumHost = value;                
+            }
+        }
+        public Host(string name, string physLocation)
+        {
+            hostName = name;
+            pingIterator = 0;
+            hostStatus = true;
+            qualityLinkHost = 100;
+            breaksNumHost = 0;
+            physLocationHost = physLocation;
+        }
+    }
 }
+// динамическое создание объектов! подумать как!
 
 //качество связи в % отдельный столбец для каждого столбца. Продумать сброс данных, чтобы не перегружать переменную
 
 //займись наконец ООП и раскидай классы по файлам!
-
-//добавить обработку исключений при отсутвии связи + обработку исключения если пустое значение
 
 //чтобы выводило без задержек, стоит попробовать пихать все в массив\класс, и выводить уже готовые значения из массива\класса 
 //без работы в реальном времени || реализация тоже идет по потокам??????
@@ -199,6 +227,6 @@ namespace Pinger
 
 //сделать потоки, один для вывода на экран сообщений, второй для выхода из цикла(нажатием кнопки, вводом сообщения...??????)
 
-//создание отдельного класса inputHostName, тянуть из файла, плюс отдельная прога для редакирования данных.
+//создание отдельного класса inputHostName, тянуть из файла(xml), плюс отдельная прога для редакирования данных.
 
 //последним добавить отправку сообщений на эл.почту (продумать как правильно сделать, чтобы не спамить)
