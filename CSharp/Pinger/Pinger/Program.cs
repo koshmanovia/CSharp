@@ -14,7 +14,8 @@ namespace Pinger
     class Pinger
     {
         static void Main(string[] args)
-        {                   
+        {      
+            //ХВАТИТ ПЛОДИТЬ НЕДОПИСАННЫЕ КЛАССЫ! ПИШИ ЗАПИСЬ ИЗ ФАЙЛА ДАННЫХ! ПОТОМ ДОКРУТИШЬ ОСТАЛЬНОЕ!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             List<String> inputHostName = new List<String>();            
             inputHostName.Add("192.168.1.1");
             inputHostName.Add("sampo.ru");
@@ -163,8 +164,15 @@ namespace Pinger
                 Console.Write(ipAddress);
                 writeCharLine(tempNumipAddress, ' ');
                 Console.Write(roadTrip);
-                writeCharLine(tempNumroadTrip, ' ');
+                writeCharLine(tempNumroadTrip + 2, ' ');
+                //для расширения просто посмотрть как смотрится  
+                Console.Write("100%");
+                writeCharLine(6, ' ');
+                Console.Write(">999");
+                writeCharLine(4, ' ');
+                Console.Write("some description of the location of the equipment");
                 Console.WriteLine();
+
             }
             else
             {
@@ -176,13 +184,21 @@ namespace Pinger
                 Console.Write(ipAddress);
                 writeCharLine(tempNumipAddress, ' ');
                 Console.Write(roadTrip);
-                writeCharLine(tempNumroadTrip, ' ');
+                writeCharLine(tempNumroadTrip + 2, ' ');
+                //для расширения просто посмотрть как смотрится           
+                Console.Write("100%");
+                writeCharLine(6, ' ');
+                Console.Write(">999");
+                writeCharLine(4, ' ');
+                Console.Write("some description of theLocation of the equipment");
+
+
                 Console.WriteLine();
             }
             Console.ResetColor();
         }
     }
-
+/*
     class Host //переименуй потом, плохое имя <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
     {
         string hostName { get; set; }
@@ -209,7 +225,7 @@ namespace Pinger
             qualityLinkHost = 100;
             breaksNumHost = 0;
             physLocationHost = physLocation;
-        }
+        } //монестер лох
     }
     class Logfile
     {
@@ -224,6 +240,10 @@ namespace Pinger
             else return;
         }     
     }
+    class inputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    {
+
+    } */
 }
 // динамическое создание объектов! подумать как!
 
