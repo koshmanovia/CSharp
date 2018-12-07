@@ -7,15 +7,14 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using System.IO;
 
 namespace Pinger
 {
     class Pinger
     {
         static void Main(string[] args)
-        {      
-            //ХВАТИТ ПЛОДИТЬ НЕДОПИСАННЫЕ КЛАССЫ! ПИШИ ЗАПИСЬ ИЗ ФАЙЛА ДАННЫХ! ПОТОМ ДОКРУТИШЬ ОСТАЛЬНОЕ!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        {               
             List<String> inputHostName = new List<String>();            
             inputHostName.Add("192.168.1.1");
             inputHostName.Add("sampo.ru");
@@ -38,7 +37,7 @@ namespace Pinger
             inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
             inputHostName.Add("10.10.10.10");
             inputHostName.Add("nalog.ru");
-
+    
             int inputHostTimeoute = 1000; //маленький таймаут для тестов! в финале исправь как надо!
             int windowHeightNum = inputHostName.Count() * 2 + 2;
             if (windowHeightNum < 64)
@@ -50,7 +49,7 @@ namespace Pinger
             }
             Console.WindowWidth = 120;
             PingerOutput startingAnalyze = new PingerOutput();
-            startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);
+             startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);
         }
     }
 
@@ -71,7 +70,7 @@ namespace Pinger
             {
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.White;
-                Console.WriteLine(spaceNum3 + "DNS Address" + spaceNum1 + "IP Address" + spaceNum2 + "Ping" + spaceNum3 + " Quality" + spaceNum3 + " Breaks " + spaceNum3 + "Location" + spaceNum4);
+                Console.WriteLine(spaceNum3 + "DNS Address" + spaceNum1 + "IP Address" + spaceNum2 + "Ping" + spaceNum3 + " Quality" + spaceNum3 + " Breaks " + spaceNum3 + "Description" + spaceNum4);
                 for (int i = 0; i < addressHost.Count; i++)
                 {
                     String tempHostName = addressHost[i];
@@ -198,52 +197,64 @@ namespace Pinger
             Console.ResetColor();
         }
     }
-/*
-    class Host //переименуй потом, плохое имя <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    {
-        string hostName { get; set; }
-        private byte pingIterator { get; set; }
-        private bool hostStatus { get; set; }
-        private byte qualityLinkHost { get; set; }
-        private short breaksNumHost { get; set; }
-        string physLocationHost { get; set; }
 
-        private short BreaksNumHost
-        {
-            get => breaksNumHost;
-            set
-            {
-                if (breaksNumHost < 1000)                
-                    breaksNumHost = value;                
-            }
-        }
-        public Host(string name, string physLocation)
-        {
-            hostName = name;
-            pingIterator = 0;
-            hostStatus = true;
-            qualityLinkHost = 100;
-            breaksNumHost = 0;
-            physLocationHost = physLocation;
-        } //монестер лох
-    }
-    class Logfile
-    {
-        public void writeErr(string catErr )
-        {
-            //продумать условия, при включенном пингере 23.00 - 1.00, чтобы проверял время и если число изменилось, создавал новый файл и писал уже в него
-            //c фиксацией времени и даты с созданием каталогов \месяц_год\число.тхт > в самом документе %время% %имя хоста% %текст ошибки%
-            if (catErr == "Warning")
-            // запись в файл информации о предупреждении высокого пинга 
-            else if (catErr == "not available")
-            // запись в файл информации о недоступности хоста c фиксацией времени и даты
-            else return;
-        }     
-    }
-    class inputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    {
+    /* class Host
+     {
+             string hostName { get; set; }
+             private byte pingIterator { get; set; }
+             private bool hostStatus { get; set; }
+             private byte qualityLinkHost { get; set; }
+             private short breaksNumHost { get; set; }
+             string physLocationHost { get; set; }
 
-    } */
+             private short BreaksNumHost
+             {
+                 get => breaksNumHost;
+                 set
+                 {
+                     if (breaksNumHost < 1000)                
+                         breaksNumHost = value;                
+                 }
+             }
+             public Host(string name, string physLocation)
+             {
+                 hostName = name;
+                 pingIterator = 0;
+                 hostStatus = true;
+                 qualityLinkHost = 100;
+                 breaksNumHost = 0;
+                 physLocationHost = physLocation;
+             } 
+     }
+         class Logfile
+         {
+             public void writeErr(string catErr )
+             {
+                 //продумать условия, при включенном пингере 23.00 - 1.00, чтобы проверял время и если число изменилось, создавал новый файл и писал уже в него
+                 //c фиксацией времени и даты с созданием каталогов \месяц_год\число.тхт > в самом документе %время% %имя хоста% %текст ошибки%
+                 if (catErr == "Warning")
+                 // запись в файл информации о предупреждении высокого пинга 
+                 else if (catErr == "not available")
+                 // запись в файл информации о недоступности хоста c фиксацией времени и даты
+                 else return;
+             }     
+         }
+         class inputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+         {
+                     /*
+             String projectPath = Environment.CurrentDirectory + "\\Data";
+             Console.WriteLine(projectPath);
+             if (Directory.Exists(projectPath))
+                 Console.WriteLine("работает");
+             else Console.WriteLine("not working");
+             Console.Read();*/
+
+}
+
+class HeadConsolePinger 
+        {
+       // тут будет куча кейсов и команд
+        } */
 }
 // динамическое создание объектов! подумать как!
 
