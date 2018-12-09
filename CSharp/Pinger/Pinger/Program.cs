@@ -194,80 +194,85 @@ namespace Pinger
             Console.ResetColor();
         }
     }
-
-     class Host
-     {
-             string hostName { get; set; }
-             private byte pingIterator { get; set; }
-             private bool hostStatus { get; set; }
-             private byte qualityLinkHost { get; set; }
-             private short breaksNumHost { get; set; }
-             string physLocationHost { get; set; }
-
-             private short BreaksNumHost
-             {
-                 get => breaksNumHost;
-                 set
-                 {
-                     if (breaksNumHost < 1000)                
-                         breaksNumHost = value;                
-                 }
-             }
-             public Host(string name, string physLocation)
-             {
-                 hostName = name;
-                 pingIterator = 0;
-                 hostStatus = true;
-                 qualityLinkHost = 100;
-                 breaksNumHost = 0;
-                 physLocationHost = physLocation;
-             } 
-     }
-         class Logfile
+    /*
+         class Host
          {
-             public void writeErr(string catErr )
-             {
-                 //продумать условия, при включенном пингере 23.00 - 1.00, чтобы проверял время и если число изменилось, создавал новый файл и писал уже в него
-                 //c фиксацией времени и даты с созданием каталогов \месяц_год\число.тхт > в самом документе %время% %имя хоста% %текст ошибки%
-                 if (catErr == "Warning")
-                 // запись в файл информации о предупреждении высокого пинга 
-                 else if (catErr == "not available")
-                 // запись в файл информации о недоступности хоста c фиксацией времени и даты
-                 else return;
-             }     
+                 string hostName { get; set; }
+                 private byte pingIterator { get; set; }
+                 private bool hostStatus { get; set; }
+                 private byte qualityLinkHost { get; set; }
+                 private short breaksNumHost { get; set; }
+                 string physLocationHost { get; set; }
+
+                 private short BreaksNumHost
+                 {
+                     get => breaksNumHost;
+                     set
+                     {
+                         if (breaksNumHost < 1000)                
+                             breaksNumHost = value;                
+                     }
+                 }
+                 public Host(string name, string physLocation)
+                 {
+                     hostName = name;
+                     pingIterator = 0;
+                     hostStatus = true;
+                     qualityLinkHost = 100;
+                     breaksNumHost = 0;
+                     physLocationHost = physLocation;
+                 } 
          }
-    class inputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
-    {
-        public List<Host> InputOtputHostData()
+             class Logfile
+             {
+                 public void writeErr(string catErr )
+                 {
+                     //продумать условия, при включенном пингере 23.00 - 1.00, чтобы проверял время и если число изменилось, создавал новый файл и писал уже в него
+                     //c фиксацией времени и даты с созданием каталогов \месяц_год\число.тхт > в самом документе %время% %имя хоста% %текст ошибки%
+                     if (catErr == "Warning")
+                     // запись в файл информации о предупреждении высокого пинга 
+                     else if (catErr == "not available")
+                     // запись в файл информации о недоступности хоста c фиксацией времени и даты
+                     else return;
+                 }     
+             }
+        class inputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
         {
-
-            String projectPath = Environment.CurrentDirectory + "\\Data";
-            Console.WriteLine(projectPath);
-            if (Directory.Exists(projectPath))
-             //InputHostData() 
-             else
-                // создание файла + заполнение(сделать через процедуру)            
-
-                return; // тут будет массив объектов Host
-        }
-
-        public void InputHostData()//переименуй процедуру
-        {
-            Console.WriteLine("Тут будут исктрукции");
-            string command = Console.ReadLine();
-
-            switch (command)
+            public List<Host> InputOtputHostData()
             {
-                case 1:
-                /*  
-                 *      выбор:
-                 * 
-                 *      1. считать из файла и выйти
-                 *      2. дописать данные в файл
-                 *      3. стереть данные из файла и записать новые
-                 * 
-                 */
-                default:
+
+                String projectPath = Environment.CurrentDirectory + "\\Data";
+                Console.WriteLine(projectPath);
+                if (Directory.Exists(projectPath))
+                 //InputHostData() 
+                 else
+                    // создание файла + заполнение(сделать через процедуру)            
+
+                    return; // тут будет массив объектов Host
+            }
+
+            public void InputHostData()//переименуй процедуру
+            {
+                Console.WriteLine("Наберите команду для продолжения");
+                Console.WriteLine("Read    - для чтения файла HostDataBase.txt");
+                Console.WriteLine("Write   - для записи еще данных в конец файла, не стирая данные");
+                Console.WriteLine("ReWrite - для удаления данных из файла и записи их в ручную через консоль");
+                Console.WriteLine("          Испольюзуя ключ -b будет сделать backup в %root%\Data\backup\%date%.txt");
+                string command = Console.ReadLine();
+
+                switch (command)
+                {
+                    case "Read":
+                    case "Write":
+                    case "ReWrite":
+                    case "ReWrite -b":
+                    /*      выбор:                 
+                     *      1. считать из файла и выйти
+                     *      2. дописать данные в файл
+                     *      3. стереть данные из файла и записать новые 
+                     *      4. стереть данные из файла и записать новые предварительно сделав backup   
+                     */
+    /*            default:
                     //тут придется использовать goto, то это не точно, т.к пока не сделан выбор надо вернуться в начало
             }
         }        
@@ -275,7 +280,7 @@ namespace Pinger
     class HeadConsolePinger
     {                          
 
-    }
+    }*/
 }
 /* 
  *  динамическое создание объектов! подумать как!
