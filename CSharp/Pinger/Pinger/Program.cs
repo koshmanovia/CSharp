@@ -61,14 +61,14 @@ namespace Pinger
             String ipAddress;
             long roadTrip;
             outputDataPinger line = new outputDataPinger();
-            String spaceNum1 = "            ";//12
+            String spaceNum1 = "            ";//12 УБРАТЬ ЭТО ОТСЮДА 
             String spaceNum2 = "           ";//11
             String spaceNum3 = "  ";//2
             String spaceNum4 = "                                    ";//36
 
             for (; ; )
             {
-                Console.ForegroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Black; // и эти три строки убрать! 
                 Console.BackgroundColor = ConsoleColor.White;
                 Console.WriteLine(spaceNum3 + "DNS Address" + spaceNum1 + "IP Address" + spaceNum2 + "Ping" + spaceNum3 + " Quality" + spaceNum3 + " Breaks " + spaceNum3 + "Description" + spaceNum4);
                 for (int i = 0; i < addressHost.Count; i++)
@@ -107,7 +107,7 @@ namespace Pinger
             }
         }
     }
-    class outputDataPinger
+    class outputDataPinger // весь вывод текстовых сообщений перенести сюда, и переименовать класс. вывод сделать процедурно, и правильно назвать процедуры, чтобы было понятно
     {
 
         public void writeCharLine(int inpLongNum, char inpChar)
@@ -117,6 +117,15 @@ namespace Pinger
                 Console.Write(inpChar);
             }
         }
+        public void writeCharLine(int inpLongNum)
+        {
+            char inpChar = ' ';
+            for (int j = 0; j < inpLongNum; j++)
+            {
+                Console.Write(inpChar);
+            }
+        }
+
         public void writeTextColor(String hostName, String ipAddress, long roadTrip)
         {
             int LengthHostName = hostName.Length;
