@@ -61,16 +61,11 @@ namespace Pinger
             String ipAddress;
             long roadTrip;
             outputDataPinger line = new outputDataPinger();
-            String spaceNum1 = "            ";//12 УБРАТЬ ЭТО ОТСЮДА 
-            String spaceNum2 = "           ";//11
-            String spaceNum3 = "  ";//2
-            String spaceNum4 = "                                    ";//36
+
 
             for (; ; )
             {
-                Console.ForegroundColor = ConsoleColor.Black; // и эти три строки убрать! 
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.WriteLine(spaceNum3 + "DNS Address" + spaceNum1 + "IP Address" + spaceNum2 + "Ping" + spaceNum3 + " Quality" + spaceNum3 + " Breaks " + spaceNum3 + "Description" + spaceNum4);
+                line.writeHeadTable();
                 for (int i = 0; i < addressHost.Count; i++)
                 {
                     String tempHostName = addressHost[i];
@@ -125,7 +120,25 @@ namespace Pinger
                 Console.Write(inpChar);
             }
         }
-
+        public void writeHeadTable()
+        {
+            Console.ForegroundColor = ConsoleColor.Black;  
+            Console.BackgroundColor = ConsoleColor.White;            
+            writeCharLine(2);
+            Console.Write("DNS Address");
+            writeCharLine(12);
+            Console.Write("IP Address");
+            writeCharLine(10);
+            Console.Write("Ping");
+            writeCharLine(4);
+            Console.Write("Quality");
+            writeCharLine(3);
+            Console.Write("Breaks");
+            writeCharLine(3);
+            Console.Write("Description");
+            writeCharLine(36);
+            Console.WriteLine();
+        }
         public void writeTextColor(String hostName, String ipAddress, long roadTrip)
         {
             int LengthHostName = hostName.Length;
