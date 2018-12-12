@@ -58,48 +58,96 @@ namespace Pinger
         public void CreateTableHost(List<String> addressHost, int timeoutHost)
         {
             Ping Pinger = new Ping();
-            String ipAddress;
-            long roadTrip;
+            String ipAddress = null;
+            long roadTrip = 0;
+            List<String> tempHostName = new List<String>();
+            List<String> tempIpAddress = new List<String>();
+            List<long> tempRoadTrip = new List<long>();
+            String HostName = null;
             outputDataPinger line = new outputDataPinger();
-
 
             for (; ; )
             {
-                line.writeHeadTable();
+               // line.writeHeadTable();
                 for (int i = 0; i < addressHost.Count; i++)
                 {
-                    String tempHostName = addressHost[i];
+                    HostName = addressHost[i];
                     try
                     {
-                        PingReply ReplyInputDataHost = Pinger.Send(tempHostName, timeoutHost);
+                        PingReply ReplyInputDataHost = Pinger.Send(HostName, timeoutHost);
                         try
                         {
                             ipAddress = ReplyInputDataHost.Address.ToString();
                             roadTrip = ReplyInputDataHost.RoundtripTime;
-                            Console.WriteLine();
-                            line.writeTextColor(tempHostName, ipAddress, roadTrip);
+                            //Console.WriteLine();
+                            //line.writeTextColor(HostName, ipAddress, roadTrip);
+                            tempHostName.Add(HostName);
+                            tempIpAddress.Add(ipAddress);                            
+                            tempRoadTrip.Add(roadTrip);
+
                         }
                         catch (NullReferenceException)
                         {
                             ipAddress = "not available";
                             roadTrip = 0;
-                            Console.WriteLine();
-                            line.writeTextColor(tempHostName, ipAddress, roadTrip);
+                           // Console.WriteLine();
+                            //line.writeTextColor(HostName, ipAddress, roadTrip);
+                            tempHostName.Add(HostName);
+                            tempIpAddress.Add(ipAddress);
+                            tempRoadTrip.Add(roadTrip);
                         }
                     }
                     catch (PingException)
                     {                     
                         ipAddress = "HOST NAME ERROR!";
                         roadTrip = 0;
-                        Console.WriteLine();
-                        line.writeTextColor( tempHostName, ipAddress, roadTrip);
-
-                    }
+                        //Console.WriteLine();
+                        // line.writeTextColor(HostName, ipAddress, roadTrip);
+                        tempHostName.Add(HostName);
+                        tempIpAddress.Add(ipAddress);
+                        tempRoadTrip.Add(roadTrip);
+                    }                   
+                }
+                Console.Clear();
+                line.writeHeadTable();
+                for (int i = 0; i < addressHost.Count; i++)
+                {                   
+                    line.writeTextColor(tempHostName[i], tempIpAddress[i], tempRoadTrip[i]);
+                    Console.WriteLine();
                 }
                 Thread.Sleep(3200);
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.Clear();
+                
             }
+            
+        }
+    }
+    class Host
+    {
+        string hostName { get; set; }
+        private byte pingIterator { get; set; }
+        private bool hostStatus { get; set; }
+        private byte qualityLinkHost { get; set; }
+        private short breaksNumHost { get; set; }
+        string physLocationHost { get; set; }
+
+        private short BreaksNumHost
+        {
+            get => breaksNumHost;
+            set
+            {
+                if (breaksNumHost < 1000)
+                    breaksNumHost = value;
+            }
+        }
+        public Host(string name, string physLocation)
+        {
+            hostName = name;
+            pingIterator = 0;
+            hostStatus = true;
+            qualityLinkHost = 100;
+            breaksNumHost = 0;
+            physLocationHost = physLocation;
         }
     }
     class outputDataPinger // весь вывод текстовых сообщений перенести сюда, и переименовать класс. вывод сделать процедурно, и правильно назвать процедуры, чтобы было понятно
@@ -133,8 +181,8 @@ namespace Pinger
             writeCharLine(4);
             Console.Write("Quality");
             writeCharLine(3);
-            Console.Write("Breaks");
-            writeCharLine(3);
+           // Console.Write("Breaks");
+          //  writeCharLine(3);
             Console.Write("Description");
             writeCharLine(36);
             Console.WriteLine();
@@ -183,14 +231,14 @@ namespace Pinger
                 int tempNumroadTrip = 6 - LengthroadTrip;
                 Console.Write("  " + hostName.Substring(0, 19) + "..  ");
                 Console.Write(ipAddress);
-                writeCharLine(tempNumipAddress, ' ');
+                writeCharLine(tempNumipAddress);
                 Console.Write(roadTrip);
-                writeCharLine(tempNumroadTrip + 2, ' ');
+                writeCharLine(tempNumroadTrip + 2);
                 //для расширения просто посмотрть как смотрится в будущем все будет работать
                 Console.Write("100%");
-                writeCharLine(6, ' ');
-                Console.Write(">999");
-                writeCharLine(4, ' ');
+                writeCharLine(6);
+             //  Console.Write(">999");
+             //   writeCharLine(4);
                 Console.Write("some description");
                 Console.WriteLine();
             }
@@ -200,52 +248,23 @@ namespace Pinger
                 int tempNumipAddress = 21 - LengthipAddress;
                 int tempNumroadTrip = 6 - LengthroadTrip;
                 Console.Write("  " + hostName);
-                writeCharLine(tempNumHostName, ' ');
+                writeCharLine(tempNumHostName);
                 Console.Write(ipAddress);
-                writeCharLine(tempNumipAddress, ' ');
+                writeCharLine(tempNumipAddress);
                 Console.Write(roadTrip);
-                writeCharLine(tempNumroadTrip + 2, ' ');
+                writeCharLine(tempNumroadTrip + 2);
                 //для расширения просто посмотрть как смотрится  в будущем все будет работать       
                 Console.Write("100%");
-                writeCharLine(6, ' ');
-                Console.Write(">999");
-                writeCharLine(4, ' ');
+               writeCharLine(6);
+            //    Console.Write(">999");
+           //     writeCharLine(4);
                 Console.Write("some description");
                 Console.WriteLine();
             }
             Console.ResetColor();
         }
     }
-    /*
-         class Host
-         {
-                 string hostName { get; set; }
-                 private byte pingIterator { get; set; }
-                 private bool hostStatus { get; set; }
-                 private byte qualityLinkHost { get; set; }
-                 private short breaksNumHost { get; set; }
-                 string physLocationHost { get; set; }
-
-                 private short BreaksNumHost
-                 {
-                     get => breaksNumHost;
-                     set
-                     {
-                         if (breaksNumHost < 1000)                
-                             breaksNumHost = value;                
-                     }
-                 }
-                 public Host(string name, string physLocation)
-                 {
-                     hostName = name;
-                     pingIterator = 0;
-                     hostStatus = true;
-                     qualityLinkHost = 100;
-                     breaksNumHost = 0;
-                     physLocationHost = physLocation;
-                 } 
-         }
-             class Logfile
+    /*  class Logfile
              {
                  public void writeErr(string catErr )
                  {
@@ -276,18 +295,18 @@ namespace Pinger
             public void InputHostData()//переименуй процедуру
             {
                 Console.WriteLine("Наберите команду для продолжения");
-                Console.WriteLine("Read    - для чтения файла HostDataBase.txt");
-                Console.WriteLine("Write   - для записи еще данных в конец файла, не стирая данные");
-                Console.WriteLine("ReWrite - для удаления данных из файла и записи их в ручную через консоль");
+                Console.WriteLine("R   - для чтения файла HostDataBase.txt");
+                Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
+                Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
                 Console.WriteLine("          Испольюзуя ключ -b будет сделать backup в %root%\Data\backup\%date%.txt");
                 string command = Console.ReadLine();
 
                 switch (command)
                 {
-                    case "Read":
-                    case "Write":
-                    case "ReWrite":
-                    case "ReWrite -b":
+                    case "R":
+                    case "W":
+                    case "RW":
+                    case "RW -b":
                     /*      выбор:                 
                      *      1. считать из файла и выйти
                      *      2. дописать данные в файл
