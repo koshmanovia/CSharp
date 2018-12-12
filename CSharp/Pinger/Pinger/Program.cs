@@ -39,7 +39,7 @@ namespace Pinger
             inputHostName.Add("nalog.ru");
     
             int inputHostTimeoute = 1000; //маленький таймаут для тестов! в финале исправь как надо!
-            int windowHeightNum = inputHostName.Count() * 2 + 2;
+            int windowHeightNum = inputHostName.Count() * 2 + 3;
             if (windowHeightNum < 64)
                 Console.WindowHeight = windowHeightNum;
             else
@@ -110,11 +110,15 @@ namespace Pinger
                 }
                 Console.Clear();
                 line.writeHeadTable();
+                Console.WriteLine();
                 for (int i = 0; i < addressHost.Count; i++)
                 {                   
                     line.writeTextColor(tempHostName[i], tempIpAddress[i], tempRoadTrip[i]);
                     Console.WriteLine();
                 }
+                tempHostName.Clear();
+                tempIpAddress.Clear();
+                tempRoadTrip.Clear();
                 Thread.Sleep(3200);
                 Console.ForegroundColor = ConsoleColor.Black;
                 
