@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
-
 namespace Pinger
 {
     class Pinger
@@ -36,10 +35,9 @@ namespace Pinger
             inputHostName.Add("harvard.edu");
             inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
             inputHostName.Add("10.10.10.10");
-            inputHostName.Add("nalog.ru");
-    
-            int inputHostTimeoute = 1000; //маленький таймаут для тестов! в финале исправь как надо!
-            int windowHeightNum = inputHostName.Count() * 2 + 3;
+            inputHostName.Add("nalog.ru");    
+            int inputHostTimeoute = 3000; 
+            int windowHeightNum = inputHostName.Count() + 3;
             if (windowHeightNum < 64)
                 Console.WindowHeight = windowHeightNum;
             else
@@ -52,7 +50,6 @@ namespace Pinger
              startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);
         }
     }
-
     class PingerOutput
     {
         public void CreateTableHost(List<String> addressHost, int timeoutHost)
@@ -65,10 +62,10 @@ namespace Pinger
             List<long> tempRoadTrip = new List<long>();
             String HostName = null;
             outputDataPinger line = new outputDataPinger();
-
+            Console.Write(" \n      Идет обработка доступности адресов, пожалуйста подождите...");
             for (; ; )
             {
-               // line.writeHeadTable();
+
                 for (int i = 0; i < addressHost.Count; i++)
                 {
                     HostName = addressHost[i];
@@ -79,19 +76,14 @@ namespace Pinger
                         {
                             ipAddress = ReplyInputDataHost.Address.ToString();
                             roadTrip = ReplyInputDataHost.RoundtripTime;
-                            //Console.WriteLine();
-                            //line.writeTextColor(HostName, ipAddress, roadTrip);
                             tempHostName.Add(HostName);
                             tempIpAddress.Add(ipAddress);                            
                             tempRoadTrip.Add(roadTrip);
-
                         }
                         catch (NullReferenceException)
                         {
                             ipAddress = "not available";
                             roadTrip = 0;
-                           // Console.WriteLine();
-                            //line.writeTextColor(HostName, ipAddress, roadTrip);
                             tempHostName.Add(HostName);
                             tempIpAddress.Add(ipAddress);
                             tempRoadTrip.Add(roadTrip);
@@ -101,8 +93,6 @@ namespace Pinger
                     {                     
                         ipAddress = "HOST NAME ERROR!";
                         roadTrip = 0;
-                        //Console.WriteLine();
-                        // line.writeTextColor(HostName, ipAddress, roadTrip);
                         tempHostName.Add(HostName);
                         tempIpAddress.Add(ipAddress);
                         tempRoadTrip.Add(roadTrip);
@@ -110,20 +100,19 @@ namespace Pinger
                 }
                 Console.Clear();
                 line.writeHeadTable();
-                Console.WriteLine();
+                //Console.WriteLine();
                 for (int i = 0; i < addressHost.Count; i++)
                 {                   
                     line.writeTextColor(tempHostName[i], tempIpAddress[i], tempRoadTrip[i]);
-                    Console.WriteLine();
+                   // Console.WriteLine();
+                    Thread.Sleep(4);
                 }
                 tempHostName.Clear();
                 tempIpAddress.Clear();
                 tempRoadTrip.Clear();
-                Thread.Sleep(3200);
-                Console.ForegroundColor = ConsoleColor.Black;
-                
+                Thread.Sleep(300);
+                Console.ForegroundColor = ConsoleColor.Black;                
             }
-            
         }
     }
     class Host
@@ -184,9 +173,7 @@ namespace Pinger
             Console.Write("Ping");
             writeCharLine(4);
             Console.Write("Quality");
-            writeCharLine(3);
-           // Console.Write("Breaks");
-          //  writeCharLine(3);
+            writeCharLine(4);
             Console.Write("Description");
             writeCharLine(36);
             Console.WriteLine();
@@ -241,8 +228,6 @@ namespace Pinger
                 //для расширения просто посмотрть как смотрится в будущем все будет работать
                 Console.Write("100%");
                 writeCharLine(6);
-             //  Console.Write(">999");
-             //   writeCharLine(4);
                 Console.Write("some description");
                 Console.WriteLine();
             }
@@ -259,9 +244,7 @@ namespace Pinger
                 writeCharLine(tempNumroadTrip + 2);
                 //для расширения просто посмотрть как смотрится  в будущем все будет работать       
                 Console.Write("100%");
-               writeCharLine(6);
-            //    Console.Write(">999");
-           //     writeCharLine(4);
+                writeCharLine(6);
                 Console.Write("some description");
                 Console.WriteLine();
             }
@@ -286,10 +269,10 @@ namespace Pinger
             public List<Host> InputOtputHostData()
             {
 
-                String projectPath = Environment.CurrentDirectory + "\\Data";
+                String projectPath = Environment.CurrentDirectory + "\\Data"; //продумать алгоритм записи\чтения файла и расписать на листке
                 Console.WriteLine(projectPath);
                 if (Directory.Exists(projectPath))
-                 //InputHostData() 
+                 //InputHostData()  
                  else
                     // создание файла + заполнение(сделать через процедуру)            
 
@@ -308,9 +291,13 @@ namespace Pinger
                 switch (command)
                 {
                     case "R":
+
                     case "W":
+
                     case "RW":
+
                     case "RW -b":
+
                     /*      выбор:                 
                      *      1. считать из файла и выйти
                      *      2. дописать данные в файл
@@ -334,16 +321,13 @@ namespace Pinger
  *
  *  займись наконец ООП и раскидай классы по файлам!
  *
- *  чтобы выводило без задержек, стоит попробовать пихать все в массив\класс, и выводить уже готовые значения из массива\класса 
- *  без работы в реальном времени || реализация тоже идет по потокам??????
- *
  *  переработай имена в более корректные и убодные не будь ленивой задницей, думай как их сделать более удобными постоянно!!!
  *
  *  добавь ведение лога с привязкой времени 
  *
  *  сделать потоки, один для вывода на экран сообщений, второй для выхода из цикла(нажатием кнопки, вводом сообщения...??????)
  *
- *  создание отдельного класса inputHostName, тянуть из файла(xml), плюс отдельная прога для редакирования данных.
+ *  создание отдельного класса inputHostName, тянуть из файла(xml), плюс отдельная процедура для редакирования данных.
  *
  *  последним добавить отправку сообщений на эл.почту (продумать как правильно сделать, чтобы не спамить)
  */
