@@ -37,6 +37,7 @@ namespace Pinger
             inputHostName.Add("10.10.10.10");
             inputHostName.Add("nalog.ru");    
             int inputHostTimeoute = 3000; 
+            //горизонтальное выравнивание сделать<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             int windowHeightNum = inputHostName.Count() + 3;
             if (windowHeightNum < 64)
                 Console.WindowHeight = windowHeightNum;
@@ -251,65 +252,65 @@ namespace Pinger
             Console.ResetColor();
         }
     }
-    /*  class Logfile
-             {
-                 public void writeErr(string catErr )
-                 {
-                     //продумать условия, при включенном пингере 23.00 - 1.00, чтобы проверял время и если число изменилось, создавал новый файл и писал уже в него
-                     //c фиксацией времени и даты с созданием каталогов \месяц_год\число.тхт > в самом документе %время% %имя хоста% %текст ошибки%
-                     if (catErr == "Warning")
-                     // запись в файл информации о предупреждении высокого пинга 
-                     else if (catErr == "not available")
-                     // запись в файл информации о недоступности хоста c фиксацией времени и даты
-                     else return;
-                 }     
-             }
-        class inputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
+    /*class Logfile
+    {
+        public void writeErr(string catErr )
         {
-            public List<Host> InputOtputHostData()
+            //продумать условия, при включенном пингере 23.00 - 1.00, чтобы проверял время и если число изменилось, создавал новый файл и писал уже в него
+            //c фиксацией времени и даты с созданием каталогов \месяц_год\число.тхт > в самом документе %время% %имя хоста% %текст ошибки%
+            if (catErr == "Warning")
+            // запись в файл информации о предупреждении высокого пинга 
+            else if (catErr == "not available")
+            // запись в файл информации о недоступности хоста c фиксацией времени и даты
+            else return;
+        }     
+    }*/
+    class inputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
+    {
+        public List<Host> InputOtputHostData(List<Host> Host)
+        {
+            List<Host> List = Host;
+            String projectPath = Environment.CurrentDirectory + "\\Data"; //продумать алгоритм записи\чтения файла и расписать на листке
+            Console.WriteLine(projectPath);
+            if (Directory.Exists(projectPath))
+                return List;//InputHostData()  
+            else return List;
+            // создание файла + заполнение(сделать через процедуру)            
+
+            return List; // тут будет массив объектов Host
+        }
+
+        public void InputHostData()//переименуй процедуру
+        {
+            Console.WriteLine("Наберите команду для продолжения");
+            Console.WriteLine("R   - для чтения файла HostDataBase.txt");
+            Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
+            Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
+            Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в %root%\Data\backup\%date%.txt");
+            string command = Console.ReadLine();
+
+            switch (command)
             {
+                case "R":
 
-                String projectPath = Environment.CurrentDirectory + "\\Data"; //продумать алгоритм записи\чтения файла и расписать на листке
-                Console.WriteLine(projectPath);
-                if (Directory.Exists(projectPath))
-                 //InputHostData()  
-                 else
-                    // создание файла + заполнение(сделать через процедуру)            
+                case "W":
 
-                    return; // тут будет массив объектов Host
-            }
+                case "RW":
 
-            public void InputHostData()//переименуй процедуру
-            {
-                Console.WriteLine("Наберите команду для продолжения");
-                Console.WriteLine("R   - для чтения файла HostDataBase.txt");
-                Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
-                Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
-                Console.WriteLine("          Испольюзуя ключ -b будет сделать backup в %root%\Data\backup\%date%.txt");
-                string command = Console.ReadLine();
+                case "RW -b":
 
-                switch (command)
-                {
-                    case "R":
-
-                    case "W":
-
-                    case "RW":
-
-                    case "RW -b":
-
-                    /*      выбор:                 
-                     *      1. считать из файла и выйти
-                     *      2. дописать данные в файл
-                     *      3. стереть данные из файла и записать новые 
-                     *      4. стереть данные из файла и записать новые предварительно сделав backup   
-                     */
-    /*            default:
+                /*      выбор:                 
+                 *      1. считать из файла и выйти
+                 *      2. дописать данные в файл
+                 *      3. стереть данные из файла и записать новые 
+                 *      4. стереть данные из файла и записать новые предварительно сделав backup   
+                 */
+                default:
                     //тут придется использовать goto, то это не точно, т.к пока не сделан выбор надо вернуться в начало
             }
         }        
     }
-    class HeadConsolePinger
+    /*class HeadConsolePinger
     {                          
 
     }*/
