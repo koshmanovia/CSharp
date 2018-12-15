@@ -63,7 +63,7 @@ namespace Pinger
             List<long> tempRoadTrip = new List<long>();
             String HostName = null;
             outputDataPinger line = new outputDataPinger();
-            Console.Write(" \n      Идет обработка доступности адресов, пожалуйста подождите...");
+            Console.Write(" \n      Идет обработка доступности адресов, пожалуйста подождите...");            
             for (; ; )
             {
 
@@ -265,48 +265,60 @@ namespace Pinger
             else return;
         }     
     }*/
-    class inputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
+    class InputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
     {
-        public List<Host> InputOtputHostData(List<Host> Host)
+        List<Host> List = new List<Host>();
+        public List<Host> InputOtputHostData()
         {
-            List<Host> List = Host;
+
             String projectPath = Environment.CurrentDirectory + "\\Data"; //продумать алгоритм записи\чтения файла и расписать на листке
             Console.WriteLine(projectPath);
-            if (Directory.Exists(projectPath))
-                return List;//InputHostData()  
-            else return List;
-            // создание файла + заполнение(сделать через процедуру)            
-
+            if (Directory.Exists(projectPath))//прорить есть ли файл на месте
+            {
+                InputHostData();
+                return List;
+            }
+            else 
+            {
+                // создание файла +         
+                InputHostData();
+                return List;
+            }
             return List; // тут будет массив объектов Host
         }
 
         public void InputHostData()//переименуй процедуру
         {
             Console.WriteLine("Наберите команду для продолжения");
-            Console.WriteLine("R   - для чтения файла HostDataBase.txt");
+            Console.WriteLine("D   - Вывести данные из файла \"HostDataBase.txt\" на экран ");
+            Console.WriteLine("R   - для чтения файла \"HostDataBase.txt\"");
             Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
             Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
-            Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в %root%\Data\backup\%date%.txt");
+            Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в " + "'\'" + "%root%" + "'\'" + "Data" + "'\'" + "backup" + "'\'" + "%date%.txt");
             string command = Console.ReadLine();
 
             switch (command)
             {
+                case "D":
+                    break;
                 case "R":
-
+                    break;
                 case "W":
-
+                    break;
                 case "RW":
-
+                    break;
                 case "RW -b":
-
+                    break;
                 /*      выбор:                 
+                 *      0. Вывести данные из файла на экран
                  *      1. считать из файла и выйти
                  *      2. дописать данные в файл
                  *      3. стереть данные из файла и записать новые 
                  *      4. стереть данные из файла и записать новые предварительно сделав backup   
                  */
                 default:
-                    //тут придется использовать goto, то это не точно, т.к пока не сделан выбор надо вернуться в начало
+                    break;
+                 //тут придется использовать goto, то это не точно, т.к пока не сделан выбор надо вернуться в начало
             }
         }        
     }
