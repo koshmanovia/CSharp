@@ -267,50 +267,34 @@ namespace Pinger
     }*/
     class InputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
     {
-        List<Host> List = new List<Host>();
-        public List<Host> InputOtputHostData()
-        {
-
-            String projectPath = Environment.CurrentDirectory + "\\Data"; //продумать алгоритм записи\чтения файла и расписать на листке
-            Console.WriteLine(projectPath);
-            if (Directory.Exists(projectPath))//прорить есть ли файл на месте
-            {
-                InputHostData();
-                return List;
-            }
-            else 
-            {
-                // создание файла +         
-                InputHostData();
-                return List;
-            }
-            return List; // тут будет массив объектов Host
-        }
-
+        List<Host> ListHost = new List<Host>();
         public void InputHostData()//переименуй процедуру
         {
+            //вывод данных из файла на экран
             Console.WriteLine("Наберите команду для продолжения");
-            Console.WriteLine("D   - Вывести данные из файла \"HostDataBase.txt\" на экран ");
             Console.WriteLine("R   - для чтения файла \"HostDataBase.txt\"");
             Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
             Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
-            Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в " + "'\'" + "%root%" + "'\'" + "Data" + "'\'" + "backup" + "'\'" + "%date%.txt");
+            Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в " + "'\'" + "%root_program_folder%" + "'\'" + "Data" + "'\'" + "backup" + "'\'" + "%date%.txt");
             string command = Console.ReadLine();
 
             switch (command)
             {
+
                 case "D":
                     break;
                 case "R":
                     break;
                 case "W":
+                    enterByHand();//ввод данных вручную
                     break;
                 case "RW":
+                    enterByHand();//ввод данных вручную
                     break;
                 case "RW -b":
+                    enterByHand();//ввод данных вручную
                     break;
-                /*      выбор:                 
-                 *      0. Вывести данные из файла на экран
+                /*      выбор:       
                  *      1. считать из файла и выйти
                  *      2. дописать данные в файл
                  *      3. стереть данные из файла и записать новые 
@@ -320,17 +304,48 @@ namespace Pinger
                     break;
                  //тут придется использовать goto, то это не точно, т.к пока не сделан выбор надо вернуться в начало
             }
-        }        
-    }
-    /*class HeadConsolePinger
-    {                          
+        }
 
-    }*/
+        public void enterByHand()
+        {
+            String hostName = null;
+            String hostDescription = null;
+            String reply = null;
+            bool checkInp = true;
+            while (checkInp == true)
+            {             
+                    Console.WriteLine("Введите имя хоста");
+                    hostName = Console.ReadLine();
+                    Console.WriteLine("Введите расположение введенного хоста");
+                    hostDescription = Console.ReadLine();
+                    createAndFillObjectHost(hostName, hostDescription);
+                
+                for(;;)
+                {
+                    Console.WriteLine("Ввести еще один Host? \"да/нет\"");
+                    reply = Console.ReadLine();
+                    if (reply == "нет")
+                    { 
+                        checkInp = false;
+                        break;
+                    }
+                    else 
+                    if (reply == "да")
+                    break;
+                    else Console.WriteLine("ОШИБКА: Неверная команда, повторить ввод.");
+                }
+            }
+        }
+
+        public void createAndFillObjectHost (String HostName, String HostDescription)
+        {
+            Host newHost = new Host(HostName, HostDescription);
+            ListHost.Add(newHost);                   
+        }
+    }
 }
 /* 
- *  динамическое создание объектов! подумать как!
- *
- *   качество связи в % отдельный столбец для каждого столбца. Продумать сброс данных, чтобы не перегружать переменную
+ *  качество связи в % отдельный столбец для каждого столбца. Продумать сброс данных, чтобы не перегружать переменную
  *
  *  займись наконец ООП и раскидай классы по файлам!
  *
