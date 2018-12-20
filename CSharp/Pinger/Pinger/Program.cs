@@ -38,7 +38,7 @@ namespace Pinger
             inputHostName.Add("nalog.ru");    
             int inputHostTimeoute = 3000; 
             //горизонтальное выравнивание сделать<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            int windowHeightNum = inputHostName.Count() + 3;
+            int windowHeightNum = inputHostName.Count() + 2;
             if (windowHeightNum < 64)
                 Console.WindowHeight = windowHeightNum;
             else
@@ -63,7 +63,7 @@ namespace Pinger
             List<long> tempRoadTrip = new List<long>();
             String HostName = null;
             outputDataPinger line = new outputDataPinger();
-            Console.Write(" \n      Идет обработка доступности адресов, пожалуйста подождите...");            
+            Console.Write(" \n      Идет обработка доступности адресов, пожалуйста подождите...");
             for (; ; )
             {
 
@@ -112,7 +112,8 @@ namespace Pinger
                 tempIpAddress.Clear();
                 tempRoadTrip.Clear();
                 Thread.Sleep(300);
-                Console.ForegroundColor = ConsoleColor.Black;                
+                Console.ForegroundColor = ConsoleColor.Black;
+                
             }
         }
     }
@@ -270,19 +271,17 @@ namespace Pinger
         List<Host> ListHost = new List<Host>();
         public void InputHostData()//переименуй процедуру
         {
-            //вывод данных из файла на экран
+            //вывод данных из файла на экран, пронумерованным списком
             Console.WriteLine("Наберите команду для продолжения");
             Console.WriteLine("R   - для чтения файла \"HostDataBase.txt\"");
             Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
             Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
-            Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в " + "'\'" + "%root_program_folder%" + "'\'" + "Data" + "'\'" + "backup" + "'\'" + "%date%.txt");
+            Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в \\%root_program_folder%\\Data\\backup\\%date%.txt");
             string command = Console.ReadLine();
 
             switch (command)
             {
-
-                case "D":
-                    break;
+                //добавить редактирование данных по строке
                 case "R":
                     break;
                 case "W":
@@ -294,19 +293,12 @@ namespace Pinger
                 case "RW -b":
                     enterByHand();//ввод данных вручную
                     break;
-                /*      выбор:       
-                 *      1. считать из файла и выйти
-                 *      2. дописать данные в файл
-                 *      3. стереть данные из файла и записать новые 
-                 *      4. стереть данные из файла и записать новые предварительно сделав backup   
-                 */
                 default:
-                    break;
-                 //тут придется использовать goto, то это не точно, т.к пока не сделан выбор надо вернуться в начало
+                    break;//тут придется использовать goto, то это не точно, т.к пока не сделан выбор надо вернуться в начало
             }
         }
 
-        public void enterByHand()
+        public void enterByHand() //переписать, чтобы не спрашивал каждый раз "да/нет" а только нет для выхода
         {
             String hostName = null;
             String hostDescription = null;
@@ -336,7 +328,22 @@ namespace Pinger
                 }
             }
         }
+        public void readFile()
+        {
+            List<String> lineFromFile = new List<String>();
+            String tempLineFromFile = "";
+            String projectPath = Environment.CurrentDirectory + "\\Data\\HostDataBase.txt";
+            StreamReader objReader = new StreamReader(projectPath);
+            while (tempLineFromFile != null)
+            {
+                tempLineFromFile = objReader.ReadLine();
+                if (tempLineFromFile != null)
+                    lineFromFile.Add(tempLineFromFile);
+            }
+            objReader.Close();
 
+            //дописать обработку массива lineFromFile - чтобы он из строки вычленял значение хоста и описания и записывал их в экземпляры объекта
+        }
         public void createAndFillObjectHost (String HostName, String HostDescription)
         {
             Host newHost = new Host(HostName, HostDescription);
@@ -345,7 +352,7 @@ namespace Pinger
     }
 }
 /* 
- *  качество связи в % отдельный столбец для каждого столбца. Продумать сброс данных, чтобы не перегружать переменную
+ *  качество связи в % отдельный столбец для каждой строки. Продумать сброс данных, чтобы не перегружать переменную
  *
  *  займись наконец ООП и раскидай классы по файлам!
  *
@@ -355,7 +362,7 @@ namespace Pinger
  *
  *  сделать потоки, один для вывода на экран сообщений, второй для выхода из цикла(нажатием кнопки, вводом сообщения...??????)
  *
- *  создание отдельного класса inputHostName, тянуть из файла(xml), плюс отдельная процедура для редакирования данных.
+ *  создание отдельного класса inputHostName, тянуть из файла(xml\txt), плюс отдельная процедура для редакирования данных.
  *
  *  последним добавить отправку сообщений на эл.почту (продумать как правильно сделать, чтобы не спамить)
  */
