@@ -330,18 +330,30 @@ namespace Pinger
         }
         public void readFile()
         {
-            List<String> lineFromFile = new List<String>();
+            List<char> poolCharHostDescription = new List<char>;
+            List<char> poolCharHostName= new List<char>;
+            String tempHostName = "";
+            String tempDescription = "";
+            List<String> poolLineFromFile = new List<String>();
             String tempLineFromFile = "";
             String projectPath = Environment.CurrentDirectory + "\\Data\\HostDataBase.txt";
-            StreamReader objReader = new StreamReader(projectPath);
+            StreamReader fileReader = new StreamReader(projectPath);
             while (tempLineFromFile != null)
             {
-                tempLineFromFile = objReader.ReadLine();
+                tempLineFromFile = fileReader.ReadLine();
                 if (tempLineFromFile != null)
-                    lineFromFile.Add(tempLineFromFile);
+                    poolLineFromFile.Add(tempLineFromFile);
             }
-            objReader.Close();
+            fileReader.Close();
 
+            for (int i = 0; i < poolLineFromFile.Count; i++)
+            {
+                tempLineFromFile = poolLineFromFile[i];
+                for (int j = 1; i <= tempLineFromFile.Length; i++)
+                { 
+
+                }
+            }
             //дописать обработку массива lineFromFile - чтобы он из строки вычленял значение хоста и описания и записывал их в экземпляры объекта
         }
         public void createAndFillObjectHost (String HostName, String HostDescription)
