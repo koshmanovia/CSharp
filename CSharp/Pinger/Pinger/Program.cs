@@ -283,6 +283,7 @@ namespace Pinger
             {
                 //добавить редактирование данных по строке
                 case "R":
+                    readFile();
                     break;
                 case "W":
                     enterByHand();//ввод данных вручную
@@ -300,9 +301,9 @@ namespace Pinger
 
         public void enterByHand() //переписать, чтобы не спрашивал каждый раз "да/нет" а только нет для выхода
         {
-            String hostName = null;
-            String hostDescription = null;
-            String reply = null;
+            String hostName = "";
+            String hostDescription = "";
+            String reply = "";
             bool checkInp = true;
             while (checkInp == true)
             {             
@@ -330,8 +331,8 @@ namespace Pinger
         }
         public void readFile()
         {
-            List<char> poolCharHostDescription = new List<char>;
-            List<char> poolCharHostName= new List<char>;
+            int separator = 0;
+            String tempChar = "";
             String tempHostName = "";
             String tempDescription = "";
             List<String> poolLineFromFile = new List<String>();
@@ -349,18 +350,35 @@ namespace Pinger
             for (int i = 0; i < poolLineFromFile.Count; i++)
             {
                 tempLineFromFile = poolLineFromFile[i];
-                for (int j = 1; i <= tempLineFromFile.Length; i++)
-                { 
-
+                char[] poolLineCharFromFile = tempLineFromFile.ToCharArray();
+                for (int j = 0; j < poolLineCharFromFile.Length; j++) 
+                {
+                    if (poolLineCharFromFile[j] == ' ')
+                    {
+                        separator = j;
+                        break;
+                    }
                 }
-            }
-            //дописать обработку массива lineFromFile - чтобы он из строки вычленял значение хоста и описания и записывал их в экземпляры объекта
+                for (int k = 0; k < separator; k++)
+                {
+                    tempChar = poolLineCharFromFile[k].ToString();
+                    tempHostName = tempHostName + tempChar;
+                }
+                for (;separator < poolLineCharFromFile.Length; separator++)
+                {
+                    tempChar = poolLineCharFromFile[separator].ToString();
+                    tempDescription = tempDescription + tempChar;
+                }
+                createAndFillObjectHost(tempHostName, tempDescription);
+            }          
         }
         public void createAndFillObjectHost (String HostName, String HostDescription)
         {
             Host newHost = new Host(HostName, HostDescription);
             ListHost.Add(newHost);                   
         }
+
+        //дописать процедуру возвращения массива  ListHost;
     }
 }
 /* 
