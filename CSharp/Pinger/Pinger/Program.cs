@@ -283,7 +283,7 @@ namespace Pinger
             {
                 //добавить редактирование данных по строке
                 case "R":
-                    readFile();
+                    readFile();                   
                     break;
                 case "W":
                     enterByHand();//ввод данных вручную
@@ -306,25 +306,25 @@ namespace Pinger
             String reply = "";
             bool checkInp = true;
             while (checkInp == true)
-            {             
-                    Console.WriteLine("Введите имя хоста");
-                    hostName = Console.ReadLine();
-                    Console.WriteLine("Введите расположение введенного хоста");
-                    hostDescription = Console.ReadLine();
-                    createAndFillObjectHost(hostName, hostDescription);
-                
-                for(;;)
+            {
+                Console.WriteLine("Введите имя хоста");
+                hostName = Console.ReadLine();
+                Console.WriteLine("Введите расположение введенного хоста");
+                hostDescription = Console.ReadLine();
+                createAndFillObjectHost(hostName, hostDescription);
+
+                for (; ; )
                 {
                     Console.WriteLine("Ввести еще один Host? \"да/нет\"");
                     reply = Console.ReadLine();
                     if (reply == "нет")
-                    { 
+                    {
                         checkInp = false;
                         break;
                     }
-                    else 
+                    else
                     if (reply == "да")
-                    break;
+                        break;
                     else Console.WriteLine("ОШИБКА: Неверная команда, повторить ввод.");
                 }
             }
@@ -351,7 +351,7 @@ namespace Pinger
             {
                 tempLineFromFile = poolLineFromFile[i];
                 char[] poolLineCharFromFile = tempLineFromFile.ToCharArray();
-                for (int j = 0; j < poolLineCharFromFile.Length; j++) 
+                for (int j = 0; j < poolLineCharFromFile.Length; j++)
                 {
                     if (poolLineCharFromFile[j] == ' ')
                     {
@@ -364,21 +364,24 @@ namespace Pinger
                     tempChar = poolLineCharFromFile[k].ToString();
                     tempHostName = tempHostName + tempChar;
                 }
-                for (;separator < poolLineCharFromFile.Length; separator++)
+                for (; separator < poolLineCharFromFile.Length; separator++)
                 {
                     tempChar = poolLineCharFromFile[separator].ToString();
                     tempDescription = tempDescription + tempChar;
                 }
                 createAndFillObjectHost(tempHostName, tempDescription);
-            }          
+            }
         }
-        public void createAndFillObjectHost (String HostName, String HostDescription)
+        public void createAndFillObjectHost(String HostName, String HostDescription)
         {
             Host newHost = new Host(HostName, HostDescription);
-            ListHost.Add(newHost);                   
+            ListHost.Add(newHost);
         }
 
-        //дописать процедуру возвращения массива  ListHost;
+        public List<Host> getListHost()
+        {
+            return ListHost;
+        }//дописать процедуру возвращения массива  ListHost;
     }
 }
 /* 
