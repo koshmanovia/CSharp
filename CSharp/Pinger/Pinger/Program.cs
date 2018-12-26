@@ -269,7 +269,7 @@ namespace Pinger
     class InputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
     {
         List<Host> ListHost = new List<Host>();
-        public void InputHostData()//переименуй процедуру
+        public List<Host> InputHostData()//переименуй процедуру
         {
             //вывод данных из файла на экран, пронумерованным списком
             Console.WriteLine("Наберите команду для продолжения");
@@ -297,6 +297,7 @@ namespace Pinger
                 default:
                     break;//тут придется использовать goto, то это не точно, т.к пока не сделан выбор надо вернуться в начало
             }
+            return ListHost;
         }
 
         public void enterByHand() //переписать, чтобы не спрашивал каждый раз "да/нет" а только нет для выхода
@@ -381,7 +382,7 @@ namespace Pinger
         public List<Host> getListHost()
         {
             return ListHost;
-        }//дописать процедуру возвращения массива  ListHost;
+        }
     }
 }
 /* 
