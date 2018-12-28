@@ -13,7 +13,8 @@ namespace Pinger
     class Pinger
     {
         static void Main(string[] args)
-        {               
+        {
+            InputHostNameTMP test = new InputHostNameTMP();
             List<String> inputHostName = new List<String>();            
             inputHostName.Add("192.168.1.1");
             inputHostName.Add("sampo.ru");
@@ -36,8 +37,9 @@ namespace Pinger
             inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
             inputHostName.Add("10.10.10.10");
             inputHostName.Add("nalog.ru");    
-            int inputHostTimeoute = 3000; 
+            int inputHostTimeoute = 3000;
             //горизонтальное выравнивание сделать<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            test.InputHostData();
             int windowHeightNum = inputHostName.Count() + 2;
             if (windowHeightNum < 64)
                 Console.WindowHeight = windowHeightNum;
@@ -269,7 +271,8 @@ namespace Pinger
     class InputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
     {
         List<Host> ListHost = new List<Host>();
-        public List<Host> InputHostData()//переименуй процедуру
+        string command = "";
+        public void InputHostData()//переименуй процедуру
         {
             //вывод данных из файла на экран, пронумерованным списком
             Console.WriteLine("Наберите команду для продолжения");
@@ -277,28 +280,41 @@ namespace Pinger
             Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
             Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
             Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в \\%root_program_folder%\\Data\\backup\\%date%.txt");
-            string command = Console.ReadLine();
 
-            switch (command)
+
+            for (bool check = true; check == true;)
             {
-                //добавить редактирование данных по строке
-                case "R":
-                    readFile();                   
-                    break;
-                case "W":
-                    enterByHand();//ввод данных вручную
-                    break;
-                case "RW":
-                    enterByHand();//ввод данных вручную
-                    break;
-                case "RW -b":
-                    enterByHand();//ввод данных вручную
-                    break;
-                default:
-                    break;//тут придется использовать goto, то это не точно, т.к пока не сделан выбор надо вернуться в начало
+                command = Console.ReadLine();
+                switch (command)
+                {
+                    //добавить редактирование данных по строке
+                    case "R":
+                        readFile();
+                        check = false;
+                        break;
+                    case "W":
+                        enterByHand();//ввод данных вручную
+                        check = false;
+                        break;
+                    case "RW":
+                        enterByHand();//ввод данных вручную
+                        check = false;
+                        break;
+                    case "RW -b":
+                        enterByHand();//ввод данных вручную
+                        check = false;
+                        break;
+                    default:
+                        Console.WriteLine("Команда введена не верно, повторите ввод \n");
+                        Console.WriteLine("Наберите команду для продолжения");
+                        Console.WriteLine("R   - для чтения файла \"HostDataBase.txt\"");
+                        Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
+                        Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
+                        Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в \\%root_program_folder%\\Data\\backup\\%date%.txt");
+                        break;
+                }
             }
-            return ListHost;
-        }
+         }
 
         public void enterByHand() //переписать, чтобы не спрашивал каждый раз "да/нет" а только нет для выхода
         {
