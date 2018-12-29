@@ -15,8 +15,8 @@ namespace Pinger
         static void Main(string[] args)
         {
             InputHostNameTMP test = new InputHostNameTMP();
-            List<String> inputHostName = new List<String>();            
-            inputHostName.Add("192.168.1.1");
+            List<Host> inputHostName = new List<Host>();        //String >> Host    
+           /* inputHostName.Add("192.168.1.1");
             inputHostName.Add("sampo.ru");
             inputHostName.Add("gdfshsd.ghgfd ");
             inputHostName.Add("yandex.ru");
@@ -36,10 +36,11 @@ namespace Pinger
             inputHostName.Add("harvard.edu");
             inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
             inputHostName.Add("10.10.10.10");
-            inputHostName.Add("nalog.ru");    
+            inputHostName.Add("nalog.ru");    */
             int inputHostTimeoute = 3000;
             //горизонтальное выравнивание сделать<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             test.InputHostData();
+            inputHostName = test.getListHost(); // продумать более удобный способ передачи данных, или переписать класс который выводит данные, идаче мэйн завален лишней инфой
             int windowHeightNum = inputHostName.Count() + 2;
             if (windowHeightNum < 64)
                 Console.WindowHeight = windowHeightNum;
