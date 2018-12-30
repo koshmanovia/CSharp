@@ -14,34 +14,11 @@ namespace Pinger
     {
         static void Main(string[] args)
         {
-            InputHostNameTMP test = new InputHostNameTMP();
-            List<Host> inputHostName = new List<Host>();        //String >> Host    
-           /* inputHostName.Add("192.168.1.1");
-            inputHostName.Add("sampo.ru");
-            inputHostName.Add("gdfshsd.ghgfd ");
-            inputHostName.Add("yandex.ru");
-            inputHostName.Add("google.com");
-            inputHostName.Add(" erty ");
-            inputHostName.Add(" ");
-            inputHostName.Add("rambler.ru");
-            inputHostName.Add("facebook.com");
-            inputHostName.Add("100.77.160.1");
-            inputHostName.Add("kia.com");
-            inputHostName.Add("vk.ru");
-            inputHostName.Add("356.457.541.999");
-            inputHostName.Add("vk.com");
-            inputHostName.Add("github.com");
-            inputHostName.Add("wikipedia.com");
-            inputHostName.Add("101.ru");
-            inputHostName.Add("harvard.edu");
-            inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
-            inputHostName.Add("10.10.10.10");
-            inputHostName.Add("nalog.ru");    */
+            InputHostNameTMP test = new InputHostNameTMP();  //rename!           
             int inputHostTimeoute = 3000;
             //горизонтальное выравнивание сделать<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            test.InputHostData();
-            inputHostName = test.getListHost(); // продумать более удобный способ передачи данных, или переписать класс который выводит данные, идаче мэйн завален лишней инфой
-            int windowHeightNum = inputHostName.Count() + 2;
+            test.InputHostData();            
+            int windowHeightNum = test.getListHost().Count() + 2;
             if (windowHeightNum < 64)
                 Console.WindowHeight = windowHeightNum;
             else
@@ -51,12 +28,12 @@ namespace Pinger
             }
             Console.WindowWidth = 120;
             PingerOutput startingAnalyze = new PingerOutput();
-             startingAnalyze.CreateTableHost(inputHostName, inputHostTimeoute);
+             startingAnalyze.CreateTableHost(test.getListHost(), inputHostTimeoute);
         }
     }
     class PingerOutput
     {
-        public void CreateTableHost(List<String> addressHost, int timeoutHost)
+        public void CreateTableHost(List<Host> addressHost, int timeoutHost)
         {
             Ping Pinger = new Ping();
             String ipAddress = null;
@@ -317,7 +294,7 @@ namespace Pinger
             }
          }
 
-        public void enterByHand() //переписать, чтобы не спрашивал каждый раз "да/нет" а только нет для выхода
+        public void enterByHand() //переписать, чтобы не спрашивал каждый раз "да/нет" а только "нет" для выхода
         {
             String hostName = "";
             String hostDescription = "";
@@ -416,4 +393,27 @@ namespace Pinger
  *  создание отдельного класса inputHostName, тянуть из файла(xml\txt), плюс отдельная процедура для редакирования данных.
  *
  *  последним добавить отправку сообщений на эл.почту (продумать как правильно сделать, чтобы не спамить)
- */
+ *
+ 
+передача данных пингеру, в ранней версии
+inputHostName.Add("192.168.1.1");
+inputHostName.Add("sampo.ru");
+inputHostName.Add("gdfshsd.ghgfd ");
+inputHostName.Add("yandex.ru");
+inputHostName.Add("google.com");
+inputHostName.Add(" erty ");
+inputHostName.Add(" ");
+inputHostName.Add("rambler.ru");
+inputHostName.Add("facebook.com");
+inputHostName.Add("100.77.160.1");
+inputHostName.Add("kia.com");
+inputHostName.Add("vk.ru");
+inputHostName.Add("356.457.541.999");
+inputHostName.Add("vk.com");
+inputHostName.Add("github.com");
+inputHostName.Add("wikipedia.com");
+inputHostName.Add("101.ru");
+inputHostName.Add("harvard.edu");
+inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
+inputHostName.Add("10.10.10.10");
+inputHostName.Add("nalog.ru");    */
