@@ -41,7 +41,7 @@ namespace Pinger
             List<String> tempHostName = new List<String>();
             List<String> tempIpAddress = new List<String>();
             List<long> tempRoadTrip = new List<long>();
-            String HostName = null;
+            String HostName = null;            
             outputDataPinger line = new outputDataPinger();
             Console.Write(" \n      Идет обработка доступности адресов, пожалуйста подождите...");
             for (; ; )
@@ -49,6 +49,7 @@ namespace Pinger
 
                 for (int i = 0; i < addressHost.Count; i++)
                 {
+                    //придумать как сделать передачу параметров из массива хостов сюда, и добавить дополнительные параметры для вывода 
                     HostName = addressHost[i];
                     try
                     {
