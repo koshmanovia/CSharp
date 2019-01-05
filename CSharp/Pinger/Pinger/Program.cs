@@ -49,10 +49,8 @@ namespace Pinger
 
                 for (int i = 0; i < addressHost.Count; i++)
                 {
-                    //придумать как сделать передачу параметров из массива хостов сюда,
-                    //и добавить дополнительные параметры для вывода 
                     Host tempListHost = addressHost[i];
-                    HostName = tempListHost.hostName; //остановился тут, допиши
+                    HostName = tempListHost.hostName; 
                     try
                     {
                         PingReply ReplyInputDataHost = Pinger.Send(HostName, timeoutHost);
@@ -409,6 +407,7 @@ namespace Pinger
  *
  *  последним добавить отправку сообщений на эл.почту (продумать как правильно сделать, чтобы не спамить)
  *
+ *  При привышении TTL выдает сообщение будто доступен хост! исправить !!!!!! 
  
 передача данных пингеру, в ранней версии
 inputHostName.Add("192.168.1.1");
