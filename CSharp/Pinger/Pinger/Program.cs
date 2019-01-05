@@ -44,14 +44,15 @@ namespace Pinger
             String HostName = null;            
             outputDataPinger line = new outputDataPinger();            
             Console.Write(" \n      Идет обработка доступности адресов, пожалуйста подождите...");
-            for (; ; )
+            for (;;)
             {
 
                 for (int i = 0; i < addressHost.Count; i++)
                 {
-                    //придумать как сделать передачу параметров из массива хостов сюда, и добавить дополнительные параметры для вывода 
+                    //придумать как сделать передачу параметров из массива хостов сюда,
+                    //и добавить дополнительные параметры для вывода 
                     Host tempListHost = addressHost[i];
-                    HostName = tempListHost; //остановился тут, допиши
+                    HostName = tempListHost.hostName; //остановился тут, допиши
                     try
                     {
                         PingReply ReplyInputDataHost = Pinger.Send(HostName, timeoutHost);
@@ -60,12 +61,20 @@ namespace Pinger
                             ipAddress = ReplyInputDataHost.Address.ToString();
                             roadTrip = ReplyInputDataHost.RoundtripTime;
                             tempHostName.Add(HostName);
-                            tempIpAddress.Add(ipAddress);                            
+                            tempIpAddress.Add(ipAddress);
                             tempRoadTrip.Add(roadTrip);
                         }
                         catch (NullReferenceException)
                         {
                             ipAddress = "not available";
+                            roadTrip = 0;
+                            tempHostName.Add(HostName);
+                            tempIpAddress.Add(ipAddress);
+                            tempRoadTrip.Add(roadTrip);
+                        }
+                        catch (System.ArgumentNullException)
+                        {
+                            ipAddress = "СОБАКА ЗАРЫТА ТУТ";
                             roadTrip = 0;
                             tempHostName.Add(HostName);
                             tempIpAddress.Add(ipAddress);
@@ -101,12 +110,12 @@ namespace Pinger
     }
     class Host
     {
-        string hostName { get; set; }
-        private byte pingIterator { get; set; }
-        private bool hostStatus { get; set; }
-        private byte qualityLinkHost { get; set; }
-        private short breaksNumHost { get; set; }
-        string physLocationHost { get; set; }
+        public string hostName { get; set; }
+        public byte pingIterator { get; set; }
+        public bool hostStatus { get; set; }
+        public byte qualityLinkHost { get; set; }
+        public short breaksNumHost { get; set; }
+        public string physLocationHost { get; set; }
 
         private short BreaksNumHost
         {
@@ -356,6 +365,8 @@ namespace Pinger
                         break;
                     }
                 }
+                   tempHostName = ""; //Обнуление переменных
+                   tempDescription = "";
                 for (int k = 0; k < separator; k++)
                 {
                     tempChar = poolLineCharFromFile[k].ToString();
@@ -366,6 +377,8 @@ namespace Pinger
                     tempChar = poolLineCharFromFile[separator].ToString();
                     tempDescription = tempDescription + tempChar;
                 }
+                if (tempHostName == "")
+                    tempHostName = "null";//да это костыль, отстаньте!
                 createAndFillObjectHost(tempHostName, tempDescription);
             }
         }
