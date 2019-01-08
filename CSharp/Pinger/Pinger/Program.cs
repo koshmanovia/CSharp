@@ -36,12 +36,14 @@ namespace Pinger
         public void CreateTableHost(List<Host> addressHost, int timeoutHost)
         {
             Ping Pinger = new Ping();
-            String ipAddress = null;
+            String ipAddress = "";
+            String HostName = "";
+            String Description = "";
             long roadTrip = 0;
             List<String> tempHostName = new List<String>();
             List<String> tempIpAddress = new List<String>();
-            List<long> tempRoadTrip = new List<long>();
-            String HostName = null;            
+            List<String> tempDescription = new List<String>();
+            List<long> tempRoadTrip = new List<long>();                       
             outputDataPinger line = new outputDataPinger();            
             Console.Write(" \n      Идет обработка доступности адресов, пожалуйста подождите...");
             for (;;)
@@ -58,34 +60,32 @@ namespace Pinger
                         {
                             ipAddress = ReplyInputDataHost.Address.ToString();
                             roadTrip = ReplyInputDataHost.RoundtripTime;
+                            Description = tempListHost.physLocationHost;
                             tempHostName.Add(HostName);
                             tempIpAddress.Add(ipAddress);
                             tempRoadTrip.Add(roadTrip);
+                            tempDescription.Add(Description);
                         }
                         catch (NullReferenceException)
                         {
                             ipAddress = "not available";
+                            Description = tempListHost.physLocationHost;
                             roadTrip = 0;
                             tempHostName.Add(HostName);
                             tempIpAddress.Add(ipAddress);
                             tempRoadTrip.Add(roadTrip);
-                        }
-                        catch (System.ArgumentNullException)
-                        {
-                            ipAddress = "СОБАКА ЗАРЫТА ТУТ";
-                            roadTrip = 0;
-                            tempHostName.Add(HostName);
-                            tempIpAddress.Add(ipAddress);
-                            tempRoadTrip.Add(roadTrip);
+                            tempDescription.Add(Description);
                         }
                     }
                     catch (PingException)
                     {                     
                         ipAddress = "HOST NAME ERROR!";
+                        Description = tempListHost.physLocationHost;
                         roadTrip = 0;
                         tempHostName.Add(HostName);
                         tempIpAddress.Add(ipAddress);
                         tempRoadTrip.Add(roadTrip);
+                        tempDescription.Add(Description);
                     }                   
                 }
                 Console.Clear();
@@ -93,7 +93,7 @@ namespace Pinger
                 //Console.WriteLine();
                 for (int i = 0; i < addressHost.Count; i++)
                 {                   
-                    line.writeTextColor(tempHostName[i], tempIpAddress[i], tempRoadTrip[i]);
+                    line.writeTextColor(tempHostName[i], tempIpAddress[i], tempRoadTrip[i], tempDescription[i]);
                    // Console.WriteLine();
                     Thread.Sleep(4);
                 }
@@ -169,7 +169,7 @@ namespace Pinger
             writeCharLine(36);
             Console.WriteLine();
         }
-        public void writeTextColor(String hostName, String ipAddress, long roadTrip)
+        public void writeTextColor(String hostName, String ipAddress, long roadTrip, String description)
         {
             int LengthHostName = hostName.Length;
             int LengthipAddress = ipAddress.Length;
@@ -219,7 +219,7 @@ namespace Pinger
                 //для расширения просто посмотрть как смотрится в будущем все будет работать
                 Console.Write("100%");
                 writeCharLine(6);
-                Console.Write("some description");
+                Console.Write(description);
                 Console.WriteLine();
             }
             else
@@ -236,7 +236,7 @@ namespace Pinger
                 //для расширения просто посмотрть как смотрится  в будущем все будет работать       
                 Console.Write("100%");
                 writeCharLine(6);
-                Console.Write("some description");
+                Console.Write(description);
                 Console.WriteLine();
             }
             Console.ResetColor();
@@ -260,9 +260,10 @@ namespace Pinger
         List<Host> ListHost = new List<Host>();
         string command = "";
         public void InputHostData()//переименуй процедуру
-        {
+        {         
             //вывод данных из файла на экран, пронумерованным списком
             Console.WriteLine("Наберите команду для продолжения");
+            Console.WriteLine("D   - Вывести на экран содержимое файла \"HostDataBase.txt\"");
             Console.WriteLine("R   - для чтения файла \"HostDataBase.txt\"");
             Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
             Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
@@ -275,20 +276,26 @@ namespace Pinger
                 switch (command)
                 {
                     //добавить редактирование данных по строке
+                    case "D":
+                        displayFileData();
+                        break;
                     case "R":
                         readFile();
                         check = false;
                         break;
                     case "W":
                         enterByHand();//ввод данных вручную
+                        readFile();
                         check = false;
                         break;
                     case "RW":
                         enterByHand();//ввод данных вручную
+                        readFile();
                         check = false;
                         break;
                     case "RW -b":
                         enterByHand();//ввод данных вручную
+                        readFile();
                         check = false;
                         break;
                     default:
@@ -377,6 +384,8 @@ namespace Pinger
                 }
                 if (tempHostName == "")
                     tempHostName = "null";//да это костыль, отстаньте!
+                if (tempDescription == "")
+                    tempDescription = "null";//да это костыль, отстаньте!
                 createAndFillObjectHost(tempHostName, tempDescription);
             }
         }
@@ -390,7 +399,19 @@ namespace Pinger
         {
             return ListHost;
         }
-    }
+
+        public void displayFileData()
+        { 
+            readFile();
+            for (int i = 0; i<ListHost.Count(); i++)
+            {
+                Console.WriteLine(ListHost[i].hostName + " " + ListHost[i].physLocationHost);
+            }
+            Console.WriteLine();
+            ListHost.Clear();
+            InputHostData();
+        }
+    }   
 }
 /* 
  *  качество связи в % отдельный столбец для каждой строки. Продумать сброс данных, чтобы не перегружать переменную
@@ -407,27 +428,5 @@ namespace Pinger
  *
  *  последним добавить отправку сообщений на эл.почту (продумать как правильно сделать, чтобы не спамить)
  *
- *  При привышении TTL выдает сообщение будто доступен хост! исправить !!!!!! 
- 
-передача данных пингеру, в ранней версии
-inputHostName.Add("192.168.1.1");
-inputHostName.Add("sampo.ru");
-inputHostName.Add("gdfshsd.ghgfd ");
-inputHostName.Add("yandex.ru");
-inputHostName.Add("google.com");
-inputHostName.Add(" erty ");
-inputHostName.Add(" ");
-inputHostName.Add("rambler.ru");
-inputHostName.Add("facebook.com");
-inputHostName.Add("100.77.160.1");
-inputHostName.Add("kia.com");
-inputHostName.Add("vk.ru");
-inputHostName.Add("356.457.541.999");
-inputHostName.Add("vk.com");
-inputHostName.Add("github.com");
-inputHostName.Add("wikipedia.com");
-inputHostName.Add("101.ru");
-inputHostName.Add("harvard.edu");
-inputHostName.Add("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijk.com");
-inputHostName.Add("10.10.10.10");
-inputHostName.Add("nalog.ru");    */
+ *  При привышении TTL выдает сообщение будто доступен хост! исправить !!!!!!  
+ */
