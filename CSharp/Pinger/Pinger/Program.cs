@@ -216,10 +216,10 @@ namespace Pinger
                 writeCharLine(tempNumipAddress);
                 Console.Write(roadTrip);
                 writeCharLine(tempNumroadTrip + 2);
+                Console.Write(description);
                 //для расширения просто посмотрть как смотрится в будущем все будет работать
                 Console.Write("100%");
                 writeCharLine(6);
-                Console.Write(description);
                 Console.WriteLine();
             }
             else
@@ -233,28 +233,15 @@ namespace Pinger
                 writeCharLine(tempNumipAddress);
                 Console.Write(roadTrip);
                 writeCharLine(tempNumroadTrip + 2);
+                Console.Write(description);
                 //для расширения просто посмотрть как смотрится  в будущем все будет работать       
                 Console.Write("100%");
                 writeCharLine(6);
-                Console.Write(description);
                 Console.WriteLine();
             }
             Console.ResetColor();
         }
     }
-    /*class Logfile
-    {
-        public void writeErr(string catErr )
-        {
-            //продумать условия, при включенном пингере 23.00 - 1.00, чтобы проверял время и если число изменилось, создавал новый файл и писал уже в него
-            //c фиксацией времени и даты с созданием каталогов \месяц_год\число.тхт > в самом документе %время% %имя хоста% %текст ошибки%
-            if (catErr == "Warning")
-            // запись в файл информации о предупреждении высокого пинга 
-            else if (catErr == "not available")
-            // запись в файл информации о недоступности хоста c фиксацией времени и даты
-            else return;
-        }     
-    }*/
     class InputHostNameTMP //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
     {
         List<Host> ListHost = new List<Host>();
@@ -308,8 +295,7 @@ namespace Pinger
                         break;
                 }
             }
-         }
-
+        }
         public void enterByHand() //переписать, чтобы не спрашивал каждый раз "да/нет" а только "нет" для выхода
         {
             String hostName = "";
@@ -413,6 +399,19 @@ namespace Pinger
         }
     }   
 }
+/*class Logfile
+{
+    public void writeErr(string catErr )
+    {
+        //продумать условия, при включенном пингере 23.00 - 1.00, чтобы проверял время и если число изменилось, создавал новый файл и писал уже в него
+        //c фиксацией времени и даты с созданием каталогов \месяц_год\число.тхт > в самом документе %время% %имя хоста% %текст ошибки%
+        if (catErr == "Warning")
+        // запись в файл информации о предупреждении высокого пинга 
+        else if (catErr == "not available")
+        // запись в файл информации о недоступности хоста c фиксацией времени и даты
+        else return;
+    }     
+}*/
 /* 
  *  качество связи в % отдельный столбец для каждой строки. Продумать сброс данных, чтобы не перегружать переменную
  *
