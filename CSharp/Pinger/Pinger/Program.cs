@@ -215,12 +215,13 @@ namespace Pinger
                 Console.Write(ipAddress);
                 writeCharLine(tempNumipAddress);
                 Console.Write(roadTrip);
-                writeCharLine(tempNumroadTrip + 2);
-                Console.Write(description);
+                writeCharLine(tempNumroadTrip + 2);                
                 //для расширения просто посмотрть как смотрится в будущем все будет работать
                 Console.Write("100%");
                 writeCharLine(6);
+                Console.Write(description);
                 Console.WriteLine();
+
             }
             else
             {
@@ -233,10 +234,10 @@ namespace Pinger
                 writeCharLine(tempNumipAddress);
                 Console.Write(roadTrip);
                 writeCharLine(tempNumroadTrip + 2);
-                Console.Write(description);
                 //для расширения просто посмотрть как смотрится  в будущем все будет работать       
                 Console.Write("100%");
                 writeCharLine(6);
+                Console.Write(description);
                 Console.WriteLine();
             }
             Console.ResetColor();
@@ -250,8 +251,8 @@ namespace Pinger
         {         
             //вывод данных из файла на экран, пронумерованным списком
             Console.WriteLine("Наберите команду для продолжения");
-            Console.WriteLine("D   - Вывести на экран содержимое файла \"HostDataBase.txt\"");
-            Console.WriteLine("R   - для чтения файла \"HostDataBase.txt\"");
+            Console.WriteLine("disp   - Вывести на экран содержимое файла \"HostDataBase.txt\"");
+            Console.WriteLine("start   - Запуск Пингера, по данным файла\"HostDataBase.txt\"");
             Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
             Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
             Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в \\%root_program_folder%\\Data\\backup\\%date%.txt");
@@ -263,10 +264,10 @@ namespace Pinger
                 switch (command)
                 {
                     //добавить редактирование данных по строке
-                    case "D":
+                    case "disp":
                         displayFileData();
                         break;
-                    case "R":
+                    case "start":
                         readFile();
                         check = false;
                         break;
@@ -288,7 +289,8 @@ namespace Pinger
                     default:
                         Console.WriteLine("Команда введена не верно, повторите ввод \n");
                         Console.WriteLine("Наберите команду для продолжения");
-                        Console.WriteLine("R   - для чтения файла \"HostDataBase.txt\"");
+                        Console.WriteLine("disp   - Вывести на экран содержимое файла \"HostDataBase.txt\"");
+                        Console.WriteLine("start   - Запуск Пингера, по данным файла\"HostDataBase.txt\"");
                         Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
                         Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
                         Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в \\%root_program_folder%\\Data\\backup\\%date%.txt");
@@ -350,18 +352,24 @@ namespace Pinger
                 char[] poolLineCharFromFile = tempLineFromFile.ToCharArray();
                 for (int j = 0; j < poolLineCharFromFile.Length; j++)
                 {
+                    separator = j;
                     if (poolLineCharFromFile[j] == ' ')
-                    {
-                        separator = j;
+                    {                        
                         break;
                     }
                 }
-                   tempHostName = ""; //Обнуление переменных
-                   tempDescription = "";
+
+                //Если не стоит пробел после адреса хоста, своеобразная обработка исключений.
+                if (separator == poolLineCharFromFile.Length - 1)
+                separator = poolLineCharFromFile.Length;
+                
+
+                tempHostName = ""; //Обнуление переменных
+                tempDescription = "";
                 for (int k = 0; k < separator; k++)
                 {
-                    tempChar = poolLineCharFromFile[k].ToString();
-                    tempHostName = tempHostName + tempChar;
+                        tempChar = poolLineCharFromFile[k].ToString();
+                        tempHostName = tempHostName + tempChar;
                 }
                 for (; separator < poolLineCharFromFile.Length; separator++)
                 {
@@ -369,9 +377,9 @@ namespace Pinger
                     tempDescription = tempDescription + tempChar;
                 }
                 if (tempHostName == "")
-                    tempHostName = "null";//да это костыль, отстаньте!
+                    tempHostName = "\'null\'";//да это костыль, отстаньте!
                 if (tempDescription == "")
-                    tempDescription = "null";//да это костыль, отстаньте!
+                    tempDescription = "\'null\'";//да это костыль, отстаньте!
                 createAndFillObjectHost(tempHostName, tempDescription);
             }
         }
