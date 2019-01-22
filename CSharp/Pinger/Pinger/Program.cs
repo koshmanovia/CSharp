@@ -251,11 +251,11 @@ namespace Pinger
         {         
             //вывод данных из файла на экран, пронумерованным списком
             Console.WriteLine("Наберите команду для продолжения");
-            Console.WriteLine("disp   - Вывести на экран содержимое файла \"HostDataBase.txt\"");
+            Console.WriteLine("disp    - Вывести на экран содержимое файла \"HostDataBase.txt\"");
             Console.WriteLine("start   - Запуск Пингера, по данным файла\"HostDataBase.txt\"");
-            Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
-            Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
-            Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в \\%root_program_folder%\\Data\\backup\\%date%.txt");
+            Console.WriteLine("add     - для записи еще данных в конец файла, не стирая данные");
+            Console.WriteLine("add -r  - для удаления данных из файла и записи их в ручную через консоль");
+            Console.WriteLine("add -b  - будет сделан backup в \\%root_program_folder%\\Data\\backup\\%date%.txt");
 
 
             for (bool check = true; check == true;)
@@ -271,17 +271,17 @@ namespace Pinger
                         readFile();
                         check = false;
                         break;
-                    case "W":
+                    case "add":
                         enterByHand();//ввод данных вручную
                         readFile();
                         check = false;
                         break;
-                    case "RW":
+                    case "add -r":
                         enterByHand();//ввод данных вручную
                         readFile();
                         check = false;
                         break;
-                    case "RW -b":
+                    case "add -b":
                         enterByHand();//ввод данных вручную
                         readFile();
                         check = false;
@@ -289,11 +289,11 @@ namespace Pinger
                     default:
                         Console.WriteLine("Команда введена не верно, повторите ввод \n");
                         Console.WriteLine("Наберите команду для продолжения");
-                        Console.WriteLine("disp   - Вывести на экран содержимое файла \"HostDataBase.txt\"");
+                        Console.WriteLine("disp    - Вывести на экран содержимое файла \"HostDataBase.txt\"");
                         Console.WriteLine("start   - Запуск Пингера, по данным файла\"HostDataBase.txt\"");
-                        Console.WriteLine("W   - для записи еще данных в конец файла, не стирая данные");
-                        Console.WriteLine("RW  - для удаления данных из файла и записи их в ручную через консоль");
-                        Console.WriteLine("      Испольюзуя ключ -b будет сделан backup в \\%root_program_folder%\\Data\\backup\\%date%.txt");
+                        Console.WriteLine("add     - для записи еще данных в конец файла, не стирая данные");
+                        Console.WriteLine("add -r  - для удаления данных из файла и записи их в ручную через консоль");
+                        Console.WriteLine("add -b  - будет сделан backup в \\%root_program_folder%\\Data\\backup\\%date%.txt");
                         break;
                 }
             }
