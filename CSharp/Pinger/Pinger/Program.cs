@@ -264,28 +264,40 @@ namespace Pinger
                 switch (command)
                 {
                     //добавить редактирование данных по строке
-                    case "disp":
-                        displayFileData();
+                    case "disp":                        
+                        try
+                        {
+                            displayFileData();
+                        }
+                        catch (DirectoryNotFoundException)
+                        {
+                            Console.WriteLine("Файл отсутсвует");
+                        }
                         break;
+
                     case "start":
                         readFile();
                         check = false;
                         break;
+
                     case "add":
                         enterByHand();//ввод данных вручную
                         readFile();
                         check = false;
                         break;
+
                     case "add -r":
                         enterByHand();//ввод данных вручную
                         readFile();
                         check = false;
                         break;
+
                     case "add -b":
                         enterByHand();//ввод данных вручную
                         readFile();
                         check = false;
                         break;
+
                     default:
                         Console.WriteLine("Команда введена не верно, повторите ввод \n");
                         Console.WriteLine("Наберите команду для продолжения");
