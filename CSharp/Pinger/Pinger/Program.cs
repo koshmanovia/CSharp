@@ -35,6 +35,10 @@ namespace Pinger
         public void CreateTableHost(List<Host> addressHost, int timeoutHost)
         {
             Ping Pinger = new Ping();
+
+            PingOptions options = new PingOptions();
+            options.DontFragment = true;
+
             String HostName = "";
             List<String> tempHostName = new List<String>();
             List<String> tempIpAddress = new List<String>();
@@ -57,7 +61,10 @@ namespace Pinger
                         try
                         {
                             PingReply ReplyInputDataHost = Pinger.Send(HostName, timeoutHost);
-
+                            /*if (ReplyInputDataHost.Status != IPStatus.Success) 
+                            {
+                                tempIpAddress.Add("not available");
+                            }*/
                             try
                             {
                                 tempHostName.Add(HostName);
@@ -132,6 +139,7 @@ namespace Pinger
                     Console.Clear();
                     Console.WriteLine(" \n \n \n \n \n \n             Связи нет! \n      ПРОВЕРЬТЕ СЕТЕВОЕ ПОДКЛЮЧЕНИЕ!pin");
                 }
+                Thread.Sleep(1500);
             }
         }
     }
@@ -373,6 +381,50 @@ namespace Pinger
                         readFile();
                         check = false;
                         break;
+
+                    case "test":
+                        Ping pingSender = new Ping();
+                        PingOptions options = new PingOptions();
+
+                        // Use the default Ttl value which is 128,
+                        // but change the fragmentation behavior.
+                        options.DontFragment = true;
+
+                        // Create a buffer of 32 bytes of data to be transmitted.
+                        string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                        byte[] buffer = Encoding.ASCII.GetBytes(data);
+                        int timeout = 120;
+                        PingReply reply = pingSender.Send("10.10.10.10", timeout, buffer, options);
+                        if (reply.Status == IPStatus.Success)
+                        {
+                            Console.WriteLine("Address: {0}", reply.Address.ToString());
+                            Console.WriteLine("RoundTrip time: {0}", reply.RoundtripTime);
+                            Console.WriteLine("Time to live: {0}", reply.Options.Ttl);
+                            Console.WriteLine("Don't fragment: {0}", reply.Options.DontFragment);
+                            Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Address: {0}", reply.Address.ToString());
+                            Console.WriteLine("RoundTrip time: {0}", reply.RoundtripTime);
+                            //Console.WriteLine("Time to live: {0}", reply.Options.Ttl);
+                            // Console.WriteLine("Don't fragment: {0}", reply.Options.DontFragment);
+                            Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
+                        }
+                        reply = pingSender.Send("8.8.8.8", timeout, buffer, options);
+                        if (reply.Status == IPStatus.Success)
+                        {
+                            Console.WriteLine("Address: {0}", reply.Address.ToString());
+                            Console.WriteLine("RoundTrip time: {0}", reply.RoundtripTime);
+                            Console.WriteLine("Time to live: {0}", reply.Options.Ttl);
+                            Console.WriteLine("Don't fragment: {0}", reply.Options.DontFragment);
+                            Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
+                        }
+                        break;
+
+
+
+
 
                     case "help":
                         Console.WriteLine("Наберите команду для продолжения");
