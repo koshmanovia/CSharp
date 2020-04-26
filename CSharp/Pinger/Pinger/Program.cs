@@ -61,25 +61,32 @@ namespace Pinger
                         try
                         {
                             PingReply ReplyInputDataHost = Pinger.Send(HostName, timeoutHost);
-                            /*if (ReplyInputDataHost.Status != IPStatus.Success) 
-                            {
-                                tempIpAddress.Add("not available");
-                            }*/
-                            try
+                            if (ReplyInputDataHost.Status != IPStatus.Success)
                             {
                                 tempHostName.Add(HostName);
-                                tempIpAddress.Add(ReplyInputDataHost.Address.ToString());
+                                tempIpAddress.Add("not available");
                                 tempRoadTrip.Add(ReplyInputDataHost.RoundtripTime);
                                 tempDescription.Add(tempListHost.physLocationHost);
-                                tempQualityHost.Add(tempListHost.Quality(true));
-                            }
-                            catch (NullReferenceException)
-                            {
-                                tempHostName.Add(HostName);
-                                tempIpAddress.Add("not available");
-                                tempRoadTrip.Add(0);
-                                tempDescription.Add(tempListHost.physLocationHost);
                                 tempQualityHost.Add(tempListHost.Quality(false));
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    tempHostName.Add(HostName);
+                                    tempIpAddress.Add(ReplyInputDataHost.Address.ToString());
+                                    tempRoadTrip.Add(ReplyInputDataHost.RoundtripTime);
+                                    tempDescription.Add(tempListHost.physLocationHost);
+                                    tempQualityHost.Add(tempListHost.Quality(true));
+                                }
+                                catch (NullReferenceException)
+                                {
+                                    tempHostName.Add(HostName);
+                                    tempIpAddress.Add("not available");
+                                    tempRoadTrip.Add(0);
+                                    tempDescription.Add(tempListHost.physLocationHost);
+                                    tempQualityHost.Add(tempListHost.Quality(false));
+                                }
                             }
                         }
                         catch (PingException)
@@ -98,26 +105,26 @@ namespace Pinger
                             tempDescription.Add(tempListHost.physLocationHost);
                             tempQualityHost.Add(tempListHost.Quality(false));
                         }
-                        ///////////////////////////////////////////////////////////////////////
-                        ///  РАЗОБРАТЬСЯ С РАБОТОЙ ИСКЛЮЧЕНИЙ, что и когда перехватывают                 
+                        /*//////////////////////////////////////////////////////////////////////
+                        ///  РАЗОБРАТЬСЯ С РАБОТОЙ ИСКЛЮЧЕНИЙ, что и когда перехватывают       
 
                         catch (ObjectDisposedException)
                         {
-                            tempHostName.Add(HostName);
-                            tempIpAddress.Add("ObjectDisposedException!");
-                            tempRoadTrip.Add(999);
-                            tempDescription.Add(tempListHost.physLocationHost);
-                            tempQualityHost.Add(tempListHost.Quality(false));
+                        tempHostName.Add(HostName);
+                        tempIpAddress.Add("ObjectDisposedException!");
+                        tempRoadTrip.Add(999);
+                        tempDescription.Add(tempListHost.physLocationHost);
+                        tempQualityHost.Add(tempListHost.Quality(false));
                         }
                         catch (InvalidOperationException)
                         {
-                            tempHostName.Add(HostName);
-                            tempIpAddress.Add("InvalidOperationException");
-                            tempRoadTrip.Add(999);
-                            tempDescription.Add(tempListHost.physLocationHost);
-                            tempQualityHost.Add(tempListHost.Quality(false));
-                        }
-                        ///////////////////////////////////////////////////////////////////
+                        tempHostName.Add(HostName);
+                        tempIpAddress.Add("InvalidOperationException");
+                        tempRoadTrip.Add(999);
+                        tempDescription.Add(tempListHost.physLocationHost);
+                        tempQualityHost.Add(tempListHost.Quality(false));
+                        }                    
+                        //////////////////////////////////////////////////////////////////*/
                     }
                     Console.Clear();
                     line.writeHeadTable();
@@ -129,8 +136,9 @@ namespace Pinger
                     tempHostName.Clear();
                     tempIpAddress.Clear();
                     tempRoadTrip.Clear();
+                    tempDescription.Clear();
                     tempQualityHost.Clear();
-                    Thread.Sleep(300);
+                    Thread.Sleep(250);
                     Console.ForegroundColor = ConsoleColor.Black;
                 }
                 else
@@ -334,7 +342,7 @@ namespace Pinger
             Console.ResetColor();
         }
     }
-    class ConsolePinger //после написания класса, удалить TMP <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<    
+    class ConsolePinger
     {
         List<Host> ListHost = new List<Host>();
         string command = "";
@@ -421,10 +429,6 @@ namespace Pinger
                             Console.WriteLine("Buffer size: {0}", reply.Buffer.Length);
                         }
                         break;
-
-
-
-
 
                     case "help":
                         Console.WriteLine("Наберите команду для продолжения");
