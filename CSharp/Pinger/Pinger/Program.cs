@@ -17,7 +17,7 @@ namespace Pinger
             ConsolePinger test = new ConsolePinger();
             int inputHostTimeoute = 3000;
             test.InputHostData();
-            int windowHeightNum = test.getListHost().Count() + 2;
+            int windowHeightNum = test.getListHost().Count() + 5;
             if (windowHeightNum < 64)
                 Console.WindowHeight = windowHeightNum;
             else
@@ -35,10 +35,8 @@ namespace Pinger
         public void CreateTableHost(List<Host> addressHost, int timeoutHost)
         {
             Ping Pinger = new Ping();
-
             PingOptions options = new PingOptions();
             options.DontFragment = true;
-
             String HostName = "";
             List<String> tempHostName = new List<String>();
             List<String> tempIpAddress = new List<String>();
@@ -48,7 +46,7 @@ namespace Pinger
             outputDataPinger line = new outputDataPinger();
             Console.Clear();
             Console.Write(" \n      Идет обработка доступности адресов, пожалуйста подождите...");
-            for (; ; )
+            for (long iterator = 1; ; iterator++)
             {
 
                 if (NetworkInterface.GetIsNetworkAvailable())
@@ -131,15 +129,15 @@ namespace Pinger
                     for (int i = 0; i < addressHost.Count; i++)
                     {
                         line.writeTextColor(tempHostName[i], tempIpAddress[i], tempRoadTrip[i], tempDescription[i], tempQualityHost[i]);
-                        Thread.Sleep(4);
+                        //Thread.Sleep(4);
                     }
                     tempHostName.Clear();
                     tempIpAddress.Clear();
                     tempRoadTrip.Clear();
                     tempDescription.Clear();
                     tempQualityHost.Clear();
-                    Thread.Sleep(250);
-                    Console.ForegroundColor = ConsoleColor.Black;
+                    //Thread.Sleep(250);
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
                 {
@@ -147,6 +145,7 @@ namespace Pinger
                     Console.Clear();
                     Console.WriteLine(" \n \n \n \n \n \n             Связи нет! \n      ПРОВЕРЬТЕ СЕТЕВОЕ ПОДКЛЮЧЕНИЕ!pin");
                 }
+                Console.WriteLine("\nКоличество итераций = " + iterator);
                 Thread.Sleep(1500);
             }
         }
@@ -257,10 +256,10 @@ namespace Pinger
             int LengthipAddress = ipAddress.Length;
             String strRoadTrip = roadTrip.ToString();
             int LengthroadTrip = strRoadTrip.Length;
-            String stringQualityHost = qualityHost.ToString();
-            if (stringQualityHost.Length < 3)
+            String stringQualityHost = qualityHost.ToString() + "%";
+            if (stringQualityHost.Length < 4)
             {
-                if (stringQualityHost.Length < 2)
+                if (stringQualityHost.Length < 3)
                 {
                     stringQualityHost = "  " + stringQualityHost;
                 }
@@ -275,11 +274,33 @@ namespace Pinger
             {
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.DarkRed;
+
+
+                //МНЕ СТЫДНО ЗА ЭТОТ КУСОК, Я ЕГО ПЕРЕПЕШУЮ ОБЕЩАЮ!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+                string fileName = Environment.CurrentDirectory + "\\Data\\log.txt";
+                FileStream aFile = new FileStream(fileName, FileMode.OpenOrCreate);
+                StreamWriter sw = new StreamWriter(aFile);
+                aFile.Seek(0, SeekOrigin.End);
+                sw.WriteLine(DateTime.Now + " - " + hostName + " Недоступен");
+                sw.Close();
+
             }
             else if (ipAddress == "HOST NAME ERROR!")
             {
                 Console.ForegroundColor = ConsoleColor.Black;
                 Console.BackgroundColor = ConsoleColor.Red;
+
+
+
+                /*/МНЕ СТЫДНО ЗА ЭТОТ КУСОК, Я ЕГО ПЕРЕПЕШУЮ ОБЕЩАЮ!<<<<<ТУТ СКОРЕЕ ВСЕГО НЕ НАДО ЛОГИРОВАТЬ<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+                string fileName = Environment.CurrentDirectory + "\\Data\\log.txt";
+                FileStream aFile = new FileStream(fileName, FileMode.OpenOrCreate);
+                StreamWriter sw = new StreamWriter(aFile);
+                aFile.Seek(0, SeekOrigin.End);
+                sw.WriteLine(DateTime.Now + " - " + hostName);
+                sw.Close();*/
             }
             else if (roadTrip == 0)
             {
@@ -577,9 +598,9 @@ namespace Pinger
  *
  *  сделать потоки, один для вывода на экран сообщений, второй для выхода из цикла(нажатием кнопки, вводом сообщения...??????)
  *
- *  создание отдельного класса inputHostName, тянуть из файла(xml\txt), плюс отдельная процедура для редакирования данных.
- *
+ *  создание отдельного класса inputHostName, тянуть из файла(xml\txt), плюс отдельная процедура для редакирования данных. 50% сделано, доделай до конца
+ *  
+ *  Обработка полностью пустой строки в процедуре ReadFile()
+ *  
  *  последним добавить отправку сообщений на эл.почту (продумать как правильно сделать, чтобы не спамить)
- *
- *  При привышении TTL выдает сообщение будто доступен хост! исправить !!!!!!  
  */
